@@ -1,11 +1,11 @@
 <div align="center">
 <h1 align="center">
-网课小工具
+网课小工具(重制版)
 </h1>
 
 ![GitHub stars](https://img.shields.io/github/stars/codfrm/cxmooc-tools.svg)
 [![Build Status](https://github.com/CodFrm/cxmooc-tools/workflows/build/badge.svg?branch=master)](https://github.com/CodFrm/cxmooc-tools)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/codfrm/cxmooc-tools.svg?label=version)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/chettoy/cxmooc-tools.svg?label=version)
 [![Chrome](https://img.shields.io/badge/chrome-success-brightgreen)](https://chrome.google.com/webstore/detail/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/kkicgcijebblepmephnfganiiochecfl?hl=zh-CN)
 [![FireFox](https://img.shields.io/badge/firefox-success-brightgreen)](https://addons.mozilla.org/zh-CN/firefox/addon/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/)
 [![tampermonkey](https://img.shields.io/badge/tampermonkey-success-yellowgreen)](https://bbs.tampermonkey.net.cn/thread-61-1-1.html)
@@ -25,15 +25,29 @@
 - [题库](#题库)
 - [关于反馈](#关于反馈)
 - [免责声明](#免责声明)
+
+## 关于重制版
+在原有基础上
+* 更新了全部依赖 (webpack5, vue3, vuepress2, ...)
+* 替换了一些弃用的库和方法
+* 内置了WebAssembly模块以还原超星网页中的字体混淆
+* 添加了题库镜像 (基于actix-web开发的备用接口)
+* 其他细节优化
+
+
+
 ## 关于网课小工具
 
 一个 超星(学习通)/智慧树(知到)/中国大学mooc 刷课工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动)
 **如果觉得好用，顺手点个 Star 吧 ❤❤❤**
 
-**仓库地址：[CodFrm/cxmooc-tools](https://github.com/CodFrm/cxmooc-tools)**
+**仓库地址：[chettoy/cxmooc-tools](https://github.com/chettoy/cxmooc-tools)**
+
+**原仓库：[CodFrm/cxmooc-tools](https://github.com/CodFrm/cxmooc-tools)**
 
 ## 从应用商店下载
 [Edge商店](javascript:void(0)) (敬请期待)
+
 [Chrome商店](https://chrome.google.com/webstore/detail/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/kkicgcijebblepmephnfganiiochecfl?hl=zh-CN) (旧版)
 
 [FireFox商店](https://addons.mozilla.org/zh-CN/firefox/addon/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/) (旧版)
@@ -45,30 +59,42 @@
 > 详情请看使用文档,不同平台所支持的功能不尽相同
 
 * [x] 视频挂机
-* [x] 视频秒过
+
+* [ ] 视频秒过
+
 * [x] 视频倍速
+
 * [x] 静音播放
+
 * [x] 任务答题
-* [x] 自动阅读
-* [x] 自动填写验证码
-* [x] 考试答题
+
 * [x] 作业答题
+
+以上功能建议使用 [FxxkStar](https://github.com/chettoy/FxxkStar) 效果更佳
+
+* [x] 自动阅读
+
+* [ ] 自动填写验证码
+
+* [x] 考试答题
+
   
 ## 适配列表
  * [x] Chrome for PC
  * [x] Microsoft Edge for PC
- * [] Firefox for PC
- * [] Firefox for Mobile
+ * [ ] Firefox for PC (未测试)
+ * [ ] Firefox for Mobile (未测试)
  * [x] QQ 浏览器 for PC
- * [] Tampermonkey (未测试)
+ * [ ] Tampermonkey (未测试)
 
 
 ## 参与开发
 > 如果你想参与开发,请阅读下面内容,如果只是使用本扩展,请移步 **[使用文档](https://cx.icodef.com/)**
 
 ### 环境:
-* Node.js
-* webpack
+* Node.js & npm
+* Rust & cargo
+* wasm-pack
 
 ### Build
 ```bash
@@ -78,11 +104,17 @@ npm install
 npm run build
 # 开发模式请使用
 npm run dev
-# 打包生成油猴脚本
-npm run tampermonkey
+# 打包生成扩展和脚本
+npm run pack
+# 生成文档
+npm run docs:build
+npm run docs:dev
 ```
 
+> 由于 `chaoxing-rs`(超星协议的rust实现) 未发布，编译前请暂时删去`webpack.config.js`中的`WasmPackPlugin`部分以跳过wasm模块的重新构建
+
 ### 贡献流程
+
 1. `Fork Repo`
 2. 发起`Pull Request`，并简要描述更改内容。
 3. `CI 检查通过`
