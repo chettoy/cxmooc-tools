@@ -189,7 +189,7 @@ export function syncGetChromeStorageLocal(key: string): Promise<any> {
 export function syncSetChromeStorageLocal(key: string, value: any): Promise<any> {
     let tmp = {};
     (<any>tmp)[key] = value;
-    return new Promise<any>(resolve => (chrome.storage.local.set(tmp, () => {
+    return new Promise<void>(resolve => (chrome.storage.local.set(tmp, () => {
         resolve();
     })));
 }

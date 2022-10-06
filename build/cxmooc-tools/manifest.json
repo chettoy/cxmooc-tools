@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "网课小工具",
-  "version": "2.5.2",
-  "description": "一个 大学生网课 学习工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动)",
+  "name": "网课小工具(remastered)",
+  "version": "2.6.0",
+  "description": "一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)",
   "icons": {
     "16": "img/logo.png",
     "48": "img/logo.png",
@@ -54,6 +54,6 @@
   "web_accessible_resources": [
     "src/mooc.js"
   ],
-  "homepage_url": "https://cx.icodef.com",
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "homepage_url": "https://err.pw/cxmooc-tools/?v=2.6.0",
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' 'wasm-eval'; object-src 'self'"
 }

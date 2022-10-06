@@ -33,11 +33,12 @@
 **仓库地址：[CodFrm/cxmooc-tools](https://github.com/CodFrm/cxmooc-tools)**
 
 ## 从应用商店下载
-[Chrome商店](https://chrome.google.com/webstore/detail/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/kkicgcijebblepmephnfganiiochecfl?hl=zh-CN)
+[Edge商店](javascript:void(0)) (敬请期待)
+[Chrome商店](https://chrome.google.com/webstore/detail/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/kkicgcijebblepmephnfganiiochecfl?hl=zh-CN) (旧版)
 
-[FireFox商店](https://addons.mozilla.org/zh-CN/firefox/addon/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/)
+[FireFox商店](https://addons.mozilla.org/zh-CN/firefox/addon/%E8%B6%85%E6%98%9F%E6%85%95%E8%AF%BE%E5%B0%8F%E5%B7%A5%E5%85%B7/) (旧版)
 
-[油猴](https://bbs.tampermonkey.net.cn/thread-61-1-1.html)
+[油猴](https://bbs.tampermonkey.net.cn/thread-61-1-1.html) (旧版)
 
 
 ## 功能支持列表
@@ -55,10 +56,11 @@
   
 ## 适配列表
  * [x] Chrome for PC
- * [x] Firefox for PC
- * [x] Firefox for Mobile
+ * [x] Microsoft Edge for PC
+ * [] Firefox for PC
+ * [] Firefox for Mobile
  * [x] QQ 浏览器 for PC
- * [x] Tampermonkey
+ * [] Tampermonkey (未测试)
 
 
 ## 参与开发
@@ -70,15 +72,14 @@
 
 ### Build
 ```bash
-git clone https://github.com/CodFrm/cxmooc-tools.git
+git clone https://github.com/chettoy/cxmooc-tools.git
 cd cxmooc-tools
 npm install
 npm run build
 # 开发模式请使用
 npm run dev
-# 打包生成crx和油猴脚本
+# 打包生成油猴脚本
 npm run tampermonkey
-npm run pack
 ```
 
 ### 贡献流程

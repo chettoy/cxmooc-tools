@@ -31,7 +31,7 @@ crx.load(['./build/cxmooc-tools/manifest.json',
 
 
 // build tampermonkey
-execSync("npm run tampermonkey");
+execSync("npm run build-tampermonkey");
 // TODO: 可以写成自动识别的
 let tampermonkey_cx = fs.readFileSync('./src/tampermonkey/cxmooc.js');
 let tampermonkey_cx_str = tampermonkey_cx.toString().replace(/@version\s+.*/, '@version ' + SystemConfig.hotVersion);
@@ -60,5 +60,5 @@ function dealVersion(version: any) {
     while (arr = reg.exec(version)) {
         ret += arr[0] + '.';
     }
-    return ret.substr(0, ret.length - 1);
+    return ret.substring(0, ret.length - 1);
 }

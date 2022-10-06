@@ -51,6 +51,7 @@ export class PageLog implements Logger {
     protected el: HTMLElement;
     protected div: HTMLElement;
     protected is_notify: boolean;
+    protected queue: Array<Function>;
 
     protected getNowTime(): string {
         let time = new Date();
@@ -81,8 +82,11 @@ export class PageLog implements Logger {
     }
 
     constructor() {
+        console.debug("Logger setup")
         this.el = undefined;
+        this.queue = Array();
         window.addEventListener("load", () => {
+            console.debug("Logger load");
             this.div = document.createElement("div");
             // 主要布局
             this.div.innerHTML = `
@@ -129,7 +133,13 @@ export class PageLog implements Logger {
                         html += "<span>[有新版本]</span>";
                     }
                     html += data.injection;
-                    this.Info(html);
+                    if (Application.App.remastered) {
+                        if (isnew) {
+                            this.Info(html);
+                        }
+                    } else {
+                        this.Info(html);
+                    }
                 });
             }, 1000);
 
@@ -188,6 +198,11 @@ export class PageLog implements Logger {
                     Application.App.config.SetConfig("notify_tools_y", this.div.style.top);
                 };
             };
+            console.debug("Logger showed");
+            let clearQueue = setInterval(() => {
+                let f = this.queue.shift();
+                f ? f() : clearInterval(clearQueue);
+            }, 200);
         });
     }
 
@@ -210,18 +225,25 @@ export class PageLog implements Logger {
 
     public Info(...args: any): Logger {
         let text = this.toStr(...args);
-        if (this.el) {
+        let display = () =>
             this.first(text, "#409EFF", "rgba(121, 187, 255, 0.2)");
+        if (this.el) {
+            display();
         } else {
-            console.info("[info", this.getNowTime(), "]", ...args);
+            this.queue.push(display);
         }
+        console.info("[info", this.getNowTime(), "]", ...args);
         return this;
     }
 
     public Warn(...args: any): Logger {
         let text = this.toStr(...args);
-        if (this.el) {
+        let display = () =>
             this.first(text, "#5C3C00", "rgba(250, 236, 216, 0.4)");
+        if (this.el) {
+            display();
+        } else {
+            this.queue.push(display);
         }
         console.warn("[warn", this.getNowTime(), "]", ...args);
         if (document.hidden && localStorage["is_notify"] == "true") {
@@ -236,8 +258,12 @@ export class PageLog implements Logger {
 
     public Error(...args: any): Logger {
         let text = this.toStr(...args);
-        if (this.el) {
+        let display = () =>
             this.first(text, "#FFF0F0", "rgba(253, 226, 226, 0.5)");
+        if (this.el) {
+            display();
+        } else {
+            this.queue.push(display);
         }
         console.error("[error", this.getNowTime(), "]", ...args);
         if (localStorage["is_notify"] == "true") {
@@ -251,8 +277,12 @@ export class PageLog implements Logger {
 
     public Fatal(...args: any): Logger {
         let text = this.toStr(...args);
-        if (this.el) {
+        let display = () =>
             this.first(text, "#ff0000", "rgba(253, 226, 226, 0.5)");
+        if (this.el) {
+            display();
+        } else {
+            this.queue.push(display);
         }
         console.error("[fatal", this.getNowTime(), "]", ...args);
         Noifications({

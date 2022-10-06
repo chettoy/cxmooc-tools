@@ -1,5 +1,6 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const wasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 const home = __dirname + '/src';
 module.exports = {
     entry: {
@@ -22,25 +23,36 @@ module.exports = {
                 removeComments: true
             },
             chunks: ['popup']
-        })
+        }),
+        new wasmPackPlugin({
+            crateDirectory: path.resolve(__dirname, "../chaoxing-rs/fxxkmod"),
+            outDir: "../../cxmooc-tools/src/fxxkmod",
+            extraArgs: "--target web",
+        }),
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                use: 'css-loader',
             }, {
                 test: /\.ts$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+            }, {
+                test: /\.wasm$/,
+                type: "asset/inline",
             }
         ]
     },
+    experiments: {
+        syncWebAssembly: true
+    },
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.js', '.wasm', '.vue'],
         alias: {
             "@App": path.resolve(__dirname, 'src/'),
-            'vue': 'vue/dist/vue.esm.js'
+            'vue': 'vue/dist/vue.esm-bundler.js',
         }
     }
 };

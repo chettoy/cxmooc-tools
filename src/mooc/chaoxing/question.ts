@@ -157,8 +157,8 @@ class CourseQuestionProcessor implements QuestionProcessor {
 class ExamQuestionProcessor implements QuestionProcessor {
     public GetTopic(el: HTMLElement): string {
         let ret = el.querySelector(".Cy_TItle.clearfix .clearfix").innerHTML;
-        ret = ret.substr(0, ret.lastIndexOf('分）'));
-        ret = ret.substr(0, ret.lastIndexOf('（'));
+        ret = ret.substring(0, ret.lastIndexOf('分）'));
+        ret = ret.substring(0, ret.lastIndexOf('（'));
         return ret;
     }
 }

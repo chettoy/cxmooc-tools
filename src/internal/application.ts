@@ -38,6 +38,10 @@ export class Application {
         this.component = component;
     }
 
+    public get remastered(): boolean {
+        return true;
+    }
+
     public get debug(): boolean {
         return process.env.NODE_ENV == "development";
     }

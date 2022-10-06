@@ -1,9 +1,9 @@
-import {NewExtensionServerMessage} from "./internal/utils/message";
-import {HttpUtils, get, dealHotVersion} from "./internal/utils/utils";
-import {Application, Backend, Launcher} from "./internal/application";
-import {ConsoleLog} from "./internal/utils/log";
-import {ChromeConfigItems, NewBackendConfig} from "./internal/utils/config";
-import {SystemConfig} from "./config";
+import { NewExtensionServerMessage } from "./internal/utils/message";
+import { HttpUtils, get, dealHotVersion, Injected } from "./internal/utils/utils";
+import { Application, Backend, Launcher } from "./internal/application";
+import { ConsoleLog } from "./internal/utils/log";
+import { ChromeConfigItems, NewBackendConfig } from "./internal/utils/config";
+import { SystemConfig } from "./config";
 
 class background implements Launcher {
     protected source: string;
@@ -51,7 +51,7 @@ class background implements Launcher {
             title: "使用 网课小工具 搜索题目",
             contexts: ["selection"],
             onclick: function (info, tab) {
-                chrome.tabs.create({url: "https://cx.icodef.com/query.html?q=" + encodeURIComponent(info.selectionText)});
+                chrome.tabs.create({ url: "https://cx.icodef.com/query.html?q=" + encodeURIComponent(info.selectionText) });
             }
         });
     }
@@ -62,9 +62,9 @@ class background implements Launcher {
         }
         chrome.runtime.onInstalled.addListener((details) => {
             if (details.reason == "install") {
-                chrome.tabs.create({url: "https://cx.icodef.com/"});
+                chrome.tabs.create({ url: "https://err.pw/cxmooc-tools" });
             } else if (details.reason == "update") {
-                chrome.tabs.create({url: "https://github.com/CodFrm/cxmooc-tools/releases"});
+                chrome.tabs.create({ url: "https://github.com/chettoy/cxmooc-tools/releases" });
             }
         });
     }
@@ -98,7 +98,7 @@ class background implements Launcher {
             //缓存js文件源码
             let hotVersion = dealHotVersion(data.hotversion);
             let isHotUpdate: boolean = false;
-            if (hotVersion > SystemConfig.version) {
+            if (hotVersion > SystemConfig.version && !Application.App.remastered) {
                 Application.App.log.Info("使用热更新版本:" + hotVersion);
                 isHotUpdate = true;
             }
@@ -162,7 +162,7 @@ class background implements Launcher {
                         code: `(function(){
                             let temp = document.createElement('script');
                             temp.setAttribute('type', 'text/javascript');
-                            temp.innerHTML = "` + this.dealSymbol("window.configData=" + cacheJsonText + "\n") + this.source + `";
+                            temp.innerHTML = "` + this.dealSymbol("window.configData=" + cacheJsonText + ";\n") + this.source + `";
                             temp.className = "injected-js";
                             document.documentElement.appendChild(temp)
                         }())`,
@@ -176,7 +176,9 @@ class background implements Launcher {
 }
 
 async function init() {
-    let component = new Map<string, any>().set("logger", new ConsoleLog()).set("config", new ChromeConfigItems(await NewBackendConfig()));
+    let component = new Map<string, any>()
+        .set("logger", new ConsoleLog())
+        .set("config", new ChromeConfigItems(await NewBackendConfig()));
 
     let application = new Application(Backend, new background(), component);
     application.run();

@@ -1,15 +1,15 @@
-import {CxTaskControlBar, CxTask} from "@App/mooc/chaoxing/task";
-import {createBtn, get, isPhone, protocolPrompt, randNumber} from "@App/internal/utils/utils";
-import {Application} from "@App/internal/application";
-import {CxVideoOptimization, Video} from "@App/mooc/chaoxing/video";
-import {CssBtn} from "@App/mooc/chaoxing/utils";
-import {Context, Hook} from "@App/internal/utils/hook";
-import {TaskType} from "@App/internal/app/task";
+import { CxTaskControlBar, CxTask } from "@App/mooc/chaoxing/task";
+import { createBtn, get, isPhone, protocolPrompt, randNumber } from "@App/internal/utils/utils";
+import { Application } from "@App/internal/application";
+import { CxVideoOptimization, Video } from "@App/mooc/chaoxing/video";
+import { CssBtn } from "@App/mooc/chaoxing/utils";
+import { Context, Hook } from "@App/internal/utils/hook";
+import { TaskType } from "@App/internal/app/task";
 
 export class CxDocumentTask extends CxTask {
     protected time: NodeJS.Timer;
 
-    public Start(): Promise<any> {
+    public Start(): Promise<void> {
         return new Promise(resolve => {
             let next = () => {
                 let el = this.context.document.querySelector(".imglook > .mkeRbtn");

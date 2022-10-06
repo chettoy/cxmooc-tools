@@ -47,8 +47,8 @@ export class TaskFactory {
 }
 
 export class NoSupportTask extends Task {
-    public Start(): Promise<any> {
-        return new Promise<any>(resolve => {
+    public Start(): Promise<void> {
+        return new Promise<void>(resolve => {
             resolve();
             Application.App.log.Info("暂不支持的类型,跳过");
             this.callEvent("complete");
@@ -70,8 +70,8 @@ export class VideoTask extends Task {
     protected timer: NodeJS.Timer;
     protected video: HTMLVideoElement;
 
-    public Init(): Promise<any> {
-        return new Promise<any>(resolve => {
+    public Init(): Promise<void> {
+        return new Promise<void>(resolve => {
             this.timer = setInterval(() => {
                 let video = <HTMLVideoElement>document.querySelector("video[id]");
                 if (video) {
@@ -96,7 +96,7 @@ export class VideoTask extends Task {
     }
 
     public Stop(): Promise<void> {
-        return new Promise<any>(resolve => {
+        return new Promise<void>(resolve => {
             clearInterval(this.timer);
             this.callEvent("stop");
             resolve();
@@ -110,8 +110,8 @@ export class VideoTask extends Task {
         }
     }
 
-    public Start(): Promise<any> {
-        return new Promise<any>(resolve => {
+    public Start(): Promise<void> {
+        return new Promise<void>(resolve => {
             this.initVideo();
             this.video.play();
             this.timer = setInterval(() => {
@@ -246,8 +246,8 @@ export class CourseTopicTask extends Task {
         bank.Push(answer);
     }
 
-    public Init(): Promise<any> {
-        return new Promise<any>(resolve => {
+    public Init(): Promise<void> {
+        return new Promise<void>(resolve => {
             setTimeout(() => {
                 if (document.querySelector("#tools-search")) {
                     document.querySelector("#tools-search").remove();
@@ -288,7 +288,7 @@ export class CourseTopicTask extends Task {
     }
 
     public Submit(): Promise<void> {
-        return new Promise<any>(resolve => {
+        return new Promise<void>(resolve => {
             let el = <HTMLLinkElement>document.querySelector(".submit.j-submit");
             if (el.style.display == "none") {
                 resolve();
@@ -319,7 +319,7 @@ export class DiscussTask extends Task {
         return document.querySelector("a.unfollowed") == undefined;
     }
 
-    public Start(): Promise<any> {
+    public Start(): Promise<void> {
         if (!this.list && this.list.lenght <= 0) {
             Application.App.log.Info("没有查询到记录,跳过");
             this.callEvent("complete");
@@ -331,7 +331,7 @@ export class DiscussTask extends Task {
             return;
         }
         Application.App.log.Info("复读机开启,准备复读(回复当前本讨论)");
-        return new Promise<any>(resolve => {
+        return new Promise<void>(resolve => {
             let num = 0;
             let timer = setInterval(() => {
                 try {
@@ -363,7 +363,7 @@ export class DiscussTask extends Task {
         if (this.isRepeat()) {
             return;
         }
-        return new Promise<any>(resolve => {
+        return new Promise<void>(resolve => {
             Application.App.log.Info("准备提交");
             let el = <HTMLButtonElement>document.querySelector(".u-btn-sm.u-btn-primary");
             if (!el) {

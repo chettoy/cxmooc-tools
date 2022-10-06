@@ -1,9 +1,9 @@
-import {Application} from "@App/internal/application";
-import {CxTask} from "@App/mooc/chaoxing/task";
-import {TaskFactory} from "@App/mooc/chaoxing/factory";
-import {Mooc, MoocTaskSet, MoocEvent} from "@App/internal/app/mooc";
-import {Task} from "@App/internal/app/task";
-import {EventListener} from "@App/internal/utils/event";
+import { Application } from "@App/internal/application";
+import { CxTask } from "@App/mooc/chaoxing/task";
+import { TaskFactory } from "@App/mooc/chaoxing/factory";
+import { Mooc, MoocTaskSet, MoocEvent } from "@App/internal/app/mooc";
+import { Task } from "@App/internal/app/task";
+import { EventListener } from "@App/internal/utils/event";
 
 //课程任务
 export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {

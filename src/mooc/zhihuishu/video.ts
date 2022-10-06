@@ -4,7 +4,7 @@ import { Application } from "@App/internal/application";
 import "../../views/common";
 import { randNumber, post, substrex, protocolPrompt, createBtn } from "@App/internal/utils/utils";
 import { CssBtn } from "./utils/css-tool";
-import * as queryString from "querystring";
+import { Base64 } from "js-base64";
 
 
 export class ZhsVideo implements Mooc {
@@ -67,16 +67,15 @@ export class ZhsVideo implements Mooc {
                 this.learningTimeRecord();
             }
 
-            let s = [this.videoList.recruitId, lessonId, smallLessonId, this.nowVideoId, chapterId, "0", tn, this.studyTotalTime, timeStr]
-                , l = {
-                    watchPoint: this.watchPointPost,
-                    ev: n.Z(s),
-                    courseId: this.videoList.courseId,
-                    learningTokenId: Base64.encode(this.studiedLessonDtoId.toString()),
-                    uuid: substrex(document.cookie, "uuid%22%3A%22", "%22"),
-                    dateFormate: Date.parse(<any>new Date()),
-                };
-            let postData = queryString.stringify(l);
+            let s = [this.videoList.recruitId, lessonId, smallLessonId, this.nowVideoId, chapterId, "0", tn, this.studyTotalTime, timeStr];
+            let postData = new URLSearchParams({
+                watchPoint: this.watchPointPost,
+                ev: <string>n.Z(s),
+                courseId: this.videoList.courseId.toString(),
+                learningTokenId: Base64.encode(this.studiedLessonDtoId.toString()),
+                uuid: substrex(document.cookie, "uuid%22%3A%22", "%22"),
+                dateFormate: Date.parse(<any>new Date()).toString(),
+            });
             post("https://studyservice.zhihuishu.com/learning/saveDatabaseIntervalTime", postData, false, function (data: any) {
                 let json = JSON.parse(data);
                 try {

@@ -27,11 +27,7 @@ export abstract class CxTask extends Task {
         super.callEvent(event, ...args);
     }
 
-    public Init(): Promise<any> {
-        return new Promise(resolve => {
-            resolve();
-        });
-    }
+    public async Init(): Promise<any> { }
 
     public abstract Start(): Promise<any>
 

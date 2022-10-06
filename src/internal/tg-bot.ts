@@ -1,9 +1,10 @@
-import {SystemConfig} from "../config";
+import { SystemConfig } from "../config";
 
-const TelegramBot = require('node-telegram-bot-api');
-const fs = require("fs");
-const {exec} = require('child_process');
-const request = require('request');
+import TelegramBot from 'node-telegram-bot-api';
+import * as fs from 'fs';
+import { exec } from 'child_process';
+import fetch from 'node-fetch';
+
 const botToken = process.env.BOT_TOKEN || '';
 const chat_id = process.env.GROUP_ID || '';
 const commit_range = process.env.TRAVIS_COMMIT_RANGE || '';
@@ -11,7 +12,7 @@ const branch = process.env.TRAVIS_BRANCH || 'develop';
 const tag = process.env.TRAVIS_TAG || false;
 const qqgrouptoken = (process.env.QQGROUP_TOKEN || '').split(',');
 
-const tgBot = new TelegramBot(botToken, {polling: false});
+const tgBot = new TelegramBot(botToken, { polling: false });
 
 let lastTag = '';
 if (branch == tag) {
@@ -46,12 +47,12 @@ function push() {
         }
         sendText += "更新了以下内容:\n```\n" + stdout + "\n```\n" + end;
         console.log(sendText);
-        tgBot.sendMessage(chat_id, sendText, {parse_mode: 'Markdown'});
+        tgBot.sendMessage(chat_id, sendText, { parse_mode: 'Markdown' });
         tgBot.sendDocument(chat_id, fs.createReadStream('build/cxmooc-tools.crx'));
         //send qq group
         let content = new Array();
         let t = sendText.split("m/");
-        content.push({type: 0, data: t[0]});
+        content.push({ type: 0, data: t[0] });
         t.forEach((v, k) => {
             if (k == 0) {
                 return;
@@ -62,12 +63,12 @@ function push() {
             });
         });
         for (let i = 0; i < qqgrouptoken.length; i++) {
-            request({
-                url: qqgrouptoken[i],
+            fetch(qqgrouptoken[i], {
                 method: "POST",
                 body: '{"content":' + JSON.stringify(content) + '}',
-            }, function (a1: any) {
-                console.log(a1);
+            }).then(resp => {
+                resp.text().then(a1 =>
+                    console.log(a1));
             });
         }
     });

@@ -1,21 +1,22 @@
-import {NewBackendConfig, ChromeConfigItems, Config, NewFrontendGetConfig} from "../internal/utils/config";
-import {Application, Backend, Launcher} from "../internal/application";
-import {SystemConfig} from "../config";
-import {boolToString, dealHotVersion, protocolPrompt, toBool} from "../internal/utils/utils";
-import Vue from 'vue';
+import { NewBackendConfig, ChromeConfigItems, Config, NewFrontendGetConfig } from "../internal/utils/config";
+import { Application, Backend, Launcher } from "../internal/application";
+import { SystemConfig } from "../config";
+import { boolToString, dealHotVersion, protocolPrompt, toBool } from "../internal/utils/utils";
+import * as Vue from 'vue';
 
 class popup implements Launcher {
-    protected vm: Vue;
+    protected vm: Vue.ComponentPublicInstance;
 
     constructor() {
     }
 
     public start() {
-        this.vm = new Vue({
-            el: "#platform-config",
-            data: {
-                selectKey: 'cx',
-                configs: SystemConfig.config
+        this.vm = Vue.createApp({
+            data() {
+                return {
+                    selectKey: 'cx',
+                    configs: SystemConfig.config,
+                }
             },
             async created() {
                 for (let key in this.configs) {
@@ -68,8 +69,9 @@ class popup implements Launcher {
                         }
                     }
                 }
-            }
-        });
+            },
+        }).mount("#platform-config");
+
 
         let vtoken = <HTMLInputElement>document.querySelector("#vtoken");
         vtoken.onchange = function () {
@@ -89,10 +91,14 @@ class popup implements Launcher {
                     p.innerHTML = '有新的版本更新:<a href="' + data.url + '" style="float:right;" target="_blank">点我去下载</a>  最新版本:v' + data.version;
                     document.getElementsByTagName('body')[0].appendChild(p);
                 }
-                document.getElementById("injection").innerHTML = data.injection;
+                if (Application.App.remastered) {
+                    console.log(data.injection);
+                } else {
+                    document.getElementById("injection").innerHTML = data.injection;
+                }
                 v = (SystemConfig.version >= dealHotVersion(data.hotversion) ? SystemConfig.version + ".0" : data.hotversion);
             }
-            document.getElementById('version').innerHTML = 'v' + v + (Application.App.debug ? " debug" : "");
+            document.getElementById('version').innerHTML = 'v' + v + (Application.App.remastered ? " special" : "") + (Application.App.debug ? " debug" : "");
         });
     }
 
