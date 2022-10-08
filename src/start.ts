@@ -1,5 +1,5 @@
 import { Client, NewChromeServerMessage } from "@App/internal/utils/message";
-import { get, HttpUtils, Injected, InjectedBySrc, Noifications, NotificationOptions } from "@App/internal/utils/utils";
+import { HttpUtils, InjectedBySrc, Noifications, NotificationOptions } from "@App/internal/utils/utils";
 import { Application, Content, Launcher } from "@App/internal/application";
 import { ChromeConfigItems, NewBackendConfig } from "@App/internal/utils/config";
 import { ConsoleLog } from "./internal/utils/log";
@@ -10,13 +10,13 @@ class start implements Launcher {
     public async start() {
         //调试环境注入脚本
         if (Application.App.debug) {
-            let cacheJsonText = JSON.stringify(await Application.App.config.ConfigList());
-            get(chrome.extension.getURL('src/mooc.js'), function (source: string) {
-                Injected(document, "window.configData=" + cacheJsonText + ";\n" + source);
-            });
+            //let cacheJsonText = JSON.stringify(await Application.App.config.ConfigList());
+
+            InjectedBySrc(document, chrome.runtime.getURL('src/mooc.js'));
         } else {
             chrome.runtime.sendMessage({ status: "loading" });
         }
+        // note: Inject string as scripts is not permitted in manifest v3 extension
         //转发消息
         let msg = NewChromeServerMessage("cxmooc-tools");
         msg.Accept((client, data) => {
@@ -47,8 +47,8 @@ class start implements Launcher {
         Application.CheckUpdate((isnew, data) => {
             if (isnew) {
                 if (data.enforce) {
-                    alert('刷课扩展要求强制更新');
-                    window.open(data.url);
+                    alert('刷课扩展要求强制更新' + data.url);
+                    if (!Application.App.remastered) window.open(data.url);
                     return;
                 }
             }
@@ -65,4 +65,5 @@ async function init() {
     application.run();
 }
 
+console.log("start.js called --- init...")
 init();

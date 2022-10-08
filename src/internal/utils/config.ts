@@ -36,16 +36,19 @@ export class ChromeConfigItems implements ConfigItems {
     protected Namespace: string = "";
     protected localCache: { [key: string]: any };
 
-    constructor(config: Config) {
+    constructor(config: Config, isBackend = false) {
         this.config = config;
         let list: string[] = [];
         configDefaultValue.forEach((val, key) => {
             list.push(key);
         });
-        this.config.Watch(list, (key, val) => {
-            this.localCache[key] = val;
-        });
-        this.localCache = localStorage;
+        // prevent usage of window.localStorage in ServiceWorker
+        if (!isBackend) {
+            this.config.Watch(list, (key, val) => {
+                this.localCache[key] = val;
+            });
+            this.localCache = localStorage;
+        }
     }
 
     // 设置配置的命名空间,储存格式为 namepace_configkey

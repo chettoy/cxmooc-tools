@@ -1,13 +1,11 @@
 import { NewExtensionServerMessage } from "./internal/utils/message";
-import { HttpUtils, get, dealHotVersion, Injected } from "./internal/utils/utils";
+import { HttpUtils } from "./internal/utils/utils";
 import { Application, Backend, Launcher } from "./internal/application";
 import { ConsoleLog } from "./internal/utils/log";
 import { ChromeConfigItems, NewBackendConfig } from "./internal/utils/config";
 import { SystemConfig } from "./config";
 
 class background implements Launcher {
-    protected source: string;
-    protected lastHotVersion: string;
 
     public start() {
         let server = NewExtensionServerMessage("cxmooc-tools");
@@ -36,23 +34,29 @@ class background implements Launcher {
                 }
             }
         });
-        this.update();
-        //1小时检查更新
-        setInterval(() => {
-            this.update();
-        }, 60 * 60 * 1000);
+        /* disable hotupdate for manifest v3 */
+        // // call update to get source code from hotupdate
+        // this.update();
+        // setInterval(() => {
+        //     this.update();
+        //     // update per hour
+        // }, 60 * 60 * 1000);
         this.injectedScript();
         this.event();
         this.menu();
     }
 
     protected menu() {
+        const menuItemId: string = "search-selected-topic";
+        chrome.contextMenus.removeAll();
         chrome.contextMenus.create({
+            id: menuItemId,
             title: "使用 网课小工具 搜索题目",
-            contexts: ["selection"],
-            onclick: function (info, tab) {
-                chrome.tabs.create({ url: "https://cx.icodef.com/query.html?q=" + encodeURIComponent(info.selectionText) });
-            }
+            contexts: ["selection"]
+        });
+        chrome.contextMenus.onClicked.addListener((info, _tab) => {
+            if (info.menuItemId !== menuItemId) return;
+            chrome.tabs.create({ url: "https://cx.icodef.com/query.html?q=" + encodeURIComponent(info.selectionText) });
         });
     }
 
@@ -71,52 +75,14 @@ class background implements Launcher {
 
     protected update() {
         Application.CheckUpdate((isnew, data) => {
-            let sourceUrl = chrome.extension.getURL('src/mooc.js');
-            let version = SystemConfig.version;
             if (isnew) {
-                chrome.browserAction.setBadgeText({
+                chrome.action.setBadgeText({
                     text: 'new'
                 });
-                chrome.browserAction.setBadgeBackgroundColor({
+                chrome.action.setBadgeBackgroundColor({
                     color: [255, 0, 0, 255]
                 });
             }
-            if (data == undefined) {
-                if (this.source) {
-                    return;
-                }
-                get(chrome.extension.getURL('src/mooc.js'), (source: string) => {
-                    version = SystemConfig.version;
-                    this.source = this.dealScript(source, SystemConfig.version);
-                });
-                return;
-            }
-            if (this.lastHotVersion == data.hotversion) {
-                return;
-            }
-            this.lastHotVersion = data.hotversion;
-            //缓存js文件源码
-            let hotVersion = dealHotVersion(data.hotversion);
-            let isHotUpdate: boolean = false;
-            if (hotVersion > SystemConfig.version && !Application.App.remastered) {
-                Application.App.log.Info("使用热更新版本:" + hotVersion);
-                isHotUpdate = true;
-            }
-            if (isHotUpdate) {
-                sourceUrl = SystemConfig.url + 'js/' + hotVersion + '.js';
-                version = hotVersion;
-            }
-            (<any>get(sourceUrl, (source: string) => {
-                this.source = this.dealScript(source, version);
-            })).error(() => {
-                if (this.source) {
-                    return;
-                }
-                get(chrome.extension.getURL('src/mooc.js'), (source: string) => {
-                    version = SystemConfig.version;
-                    this.source = this.dealScript(source, SystemConfig.version);
-                });
-            });
         });
     }
 
@@ -132,9 +98,10 @@ class background implements Launcher {
     }
 
     protected async injectedScript() {
-        if (Application.App.debug) {
-            return;
-        }
+        // if (Application.App.debug) {
+        //     return;
+        // }
+        // rules for distinguishing between platforms
         let regex = new Array();
         for (let key in SystemConfig.match) {
             for (let i = 0; i < SystemConfig.match[key].length; i++) {
@@ -150,23 +117,27 @@ class background implements Launcher {
             cache[key] = value;
             cacheJsonText = JSON.stringify(cache);
         });
+        console.log("bg add listener");
         chrome.runtime.onMessage.addListener((msg, details) => {
+            console.log("bg receive message", msg);
             if (!msg.status && msg.status != "loading") {
                 return null;
             }
             for (let i = 0; i < regex.length; i++) {
                 let reg = new RegExp(regex[i]);
                 if (reg.test(details.url)) {
-                    chrome.tabs.executeScript(details.tab.id, {
-                        frameId: details.frameId,
-                        code: `(function(){
-                            let temp = document.createElement('script');
-                            temp.setAttribute('type', 'text/javascript');
-                            temp.innerHTML = "` + this.dealSymbol("window.configData=" + cacheJsonText + ";\n") + this.source + `";
-                            temp.className = "injected-js";
-                            document.documentElement.appendChild(temp)
-                        }())`,
-                        runAt: "document_start",
+                    let target: chrome.scripting.InjectionTarget = {
+                        tabId: details.tab.id,
+                        frameIds: [details.frameId],
+                    };
+                    console.log("execute mooc.js", details);
+                    chrome.scripting.executeScript({
+                        target,
+                        files: ["src/mooc.js"]
+                    }).then(() => {
+                        console.log("mooc.js executed");
+                    }).catch(reason => {
+                        console.log("mooc.js failed to execute: " + reason);
                     });
                     break;
                 }
@@ -176,9 +147,10 @@ class background implements Launcher {
 }
 
 async function init() {
+    console.log("cxmooc-tools background worker init");
     let component = new Map<string, any>()
         .set("logger", new ConsoleLog())
-        .set("config", new ChromeConfigItems(await NewBackendConfig()));
+        .set("config", new ChromeConfigItems(await NewBackendConfig(), true));
 
     let application = new Application(Backend, new background(), component);
     application.run();

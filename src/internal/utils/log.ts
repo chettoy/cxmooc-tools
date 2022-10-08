@@ -1,5 +1,4 @@
 import { Application } from "../application";
-import "../../views/common";
 import { Noifications } from "@App/internal/utils/utils";
 
 export interface Logger {

@@ -14,9 +14,9 @@ interface PlatformConfig {
 }
 
 export class SystemConfig {
-    public static version = 2.6;
+    public static version = 3.0;
     public static url = "https://cx.icodef.com/";
-    public static hotVersion = "2.6.0";
+    public static hotVersion = "3.0.0";
     //TODO:优化规则,可以通过ci自动生成匹配规则到tampermonkey和manifest文件中
     public static match: { [key: string]: Array<string> } = {
         "cx": [

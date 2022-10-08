@@ -1,8 +1,9 @@
 import { NewBackendConfig, ChromeConfigItems, Config, NewFrontendGetConfig } from "../internal/utils/config";
 import { Application, Backend, Launcher } from "../internal/application";
 import { SystemConfig } from "../config";
-import { boolToString, dealHotVersion, protocolPrompt, toBool } from "../internal/utils/utils";
+import { dealHotVersion} from "../internal/utils/utils";
 import * as Vue from 'vue';
+import popupComponent from './popup.vue';
 
 class popup implements Launcher {
     protected vm: Vue.ComponentPublicInstance;
@@ -11,67 +12,7 @@ class popup implements Launcher {
     }
 
     public start() {
-        this.vm = Vue.createApp({
-            data() {
-                return {
-                    selectKey: 'cx',
-                    configs: SystemConfig.config,
-                }
-            },
-            async created() {
-                for (let key in this.configs) {
-                    for (let index in this.configs[key].items) {
-                        let item = this.configs[key].items[index];
-                        let val = Application.App.config.GetNamespaceConfig(key, item.key, undefined);
-                        if (val == undefined) {
-                            val = Application.App.config.GetConfig(item.key, item.value);
-                        }
-                        item.value = this.toVal(item.type, val);
-                    }
-                }
-            },
-            methods: {
-                toVal(type: string, val: string): boolean | string {
-                    switch (type) {
-                        case "checkbox": {
-                            return toBool(val);
-                        }
-                        default: {
-                            return val;
-                        }
-                    }
-                },
-                changeTab(key: string) {
-                    this.selectKey = key;
-                },
-                async change(namespace: string, key: string, type: string, val: string | boolean, index: number, prompt: string) {
-                    if (prompt !== undefined) {
-                        // 弹出信息框,还原值
-                        if (!protocolPrompt(prompt, key)) {
-                            let val = Application.App.config.GetNamespaceConfig(namespace, key, undefined);
-                            if (val == undefined) {
-                                val = Application.App.config.GetConfig(key, this.configs[namespace].items[index].value);
-                            }
-                            this.configs[namespace].items[index].value = this.toVal(type, val);
-                            return false;
-                        }
-                    }
-                    if (namespace == "common") {
-                        namespace = "";
-                    }
-                    switch (type) {
-                        case "checkbox": {
-                            await Application.App.config.SetNamespaceConfig(namespace, key, boolToString(<boolean>val));
-                            break;
-                        }
-                        default: {
-                            await Application.App.config.SetNamespaceConfig(namespace, key, <string>val);
-                        }
-                    }
-                }
-            },
-        }).mount("#platform-config");
-
+        this.vm = Vue.createApp(popupComponent).mount("#platform-config");
 
         let vtoken = <HTMLInputElement>document.querySelector("#vtoken");
         vtoken.onchange = function () {
