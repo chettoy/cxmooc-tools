@@ -1,5 +1,6 @@
 tg-bot.js
 pack-crx.js
+publish-docs.js
 config.js
 server/server
 server/config.yaml

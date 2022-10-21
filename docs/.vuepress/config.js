@@ -3,7 +3,7 @@ import { backToTopPlugin } from '@vuepress/plugin-back-to-top';
 import { googleAnalyticsPlugin } from '@vuepress/plugin-google-analytics';
 
 export default {
-    base: '/',
+    base: '/cxmooc-tools/',
     lang: 'zh-CN',
     title: '超星慕课小工具',
     description: '一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)',

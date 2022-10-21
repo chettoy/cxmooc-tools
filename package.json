@@ -11,7 +11,8 @@
     "dev": "webpack --mode development --config webpack.dev.js",
     "pack": "tsc src/internal/pack-crx.ts && node src/internal/pack-crx.js",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:publish": "tsc src/internal/publish-docs.ts && node src/internal/publish-docs.js"
   },
   "repository": {
     "type": "git",
@@ -24,16 +25,18 @@
   },
   "homepage": "https://github.com/chettoy/cxmooc-tools#readme",
   "devDependencies": {
-    "@types/chrome": "^0.0.197",
-    "@types/jest": "^29.1.2",
-    "@types/node-telegram-bot-api": "^0.57.1",
+    "@types/chrome": "^0.0.198",
+    "@types/gh-pages": "^3.2.1",
+    "@types/jest": "^29.2.0",
+    "@types/node-telegram-bot-api": "^0.57.5",
     "@vuepress/plugin-back-to-top": "^2.0.0-beta.51",
     "@vuepress/plugin-google-analytics": "^2.0.0-beta.51",
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "crx": "^5.0.1",
     "css-loader": "^6.7.1",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
-    "jest": "^29.1.2",
+    "jest": "^29.2.1",
     "node-fetch": "^3.2.10",
     "node-telegram-bot-api": "^0.59.0",
     "style-loader": "^3.3.1",
@@ -41,7 +44,7 @@
     "ts-loader": "^9.4.1",
     "typescript": "^4.8.4",
     "vue-loader": "^17.0.0",
-    "vue-template-compiler": "^2.7.10",
+    "vue-template-compiler": "^2.7.13",
     "vuepress": "^2.0.0-beta.51",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
@@ -50,6 +53,6 @@
   "dependencies": {
     "js-base64": "^3.7.2",
     "md5": "^2.3.0",
-    "vue": "^3.2.40"
+    "vue": "^3.2.41"
   }
 }
