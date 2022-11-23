@@ -137,7 +137,9 @@ export class TaskFactory {
         if (document.URL.indexOf("exam/test/reVersionTestStartNew") > 0) {
             topic.SetQueryQuestions(topic);
             let btn = CssBtn(createBtn("搜索答案", "搜索题目答案"));
-            document.querySelector(".Cy_ulBottom.clearfix.w-buttom,.Cy_ulTk,.Cy_ulBottom.clearfix").append(btn);
+            let append_target = document.querySelector(".Cy_ulBottom.clearfix.w-buttom,.Cy_ulTk,.Cy_ulBottom.clearfix");
+            console.log("append btn to", append_target);
+            append_target.append(btn);
             btn.onclick = () => {
                 btn.innerText = "答案搜索中...";
                 try {

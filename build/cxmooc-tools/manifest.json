@@ -24,6 +24,7 @@
         "*://*/work/doHomeWorkNew?*",
         "*://*/work/selectWorkQuestionYiPiYue?*",
         "*://*/exam/test/reVersionTestStartNew?*",
+        "*://*/exam-ans/exam/test/reVersionTestStartNew*",
         "*://*/ztnodedetailcontroller/visitnodedetail?*",
         "*://*/antispiderShowVerify.ac*",
         "*://*/html/processVerify.ac?*",
@@ -56,6 +57,7 @@
     "*://*/work/doHomeWorkNew?*",
     "*://*/work/selectWorkQuestionYiPiYue?*",
     "*://*/exam/test/reVersionTestStartNew?*",
+    "*://*/exam-ans/exam/test/reVersionTestStartNew*",
     "*://*/ztnodedetailcontroller/visitnodedetail?*",
     "*://*/antispiderShowVerify.ac*",
     "*://*/html/processVerify.ac?*",
@@ -83,7 +85,7 @@
       "use_dynamic_url": false
     }
   ],
-  "homepage_url": "https://err.pw/cxmooc-tools/?v=3.0.0b",
+  "homepage_url": "https://err.pw/cxmooc-tools/?v=3.0.0b2",
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
   }

@@ -125,7 +125,8 @@ export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {
 // 考试
 export class CxExamTopic implements Mooc {
     public Init(): any {
-        window.addEventListener("load", () => {
+        let _init = (() => {
+            Application.App.log.Info("Exam");
             let el = <HTMLInputElement>document.querySelector("#paperId");
             let info = "0";
             if (el) {
@@ -143,6 +144,11 @@ export class CxExamTopic implements Mooc {
                 }
             }
         });
+        if (document.readyState === "complete") {
+            _init();
+        } else {
+            window.addEventListener("load", _init);
+        }
     }
 }
 
