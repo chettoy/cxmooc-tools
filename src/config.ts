@@ -55,13 +55,15 @@ export class SystemConfig {
                 type: "checkbox",
                 key: "auto",
                 value: true,
-            }, {
-                title: "视频静音",
-                description: "播放视频时,自动开启静音",
-                type: "checkbox",
-                key: "video_mute",
-                value: true,
-            }, {
+            },
+            // {
+            //     title: "视频静音",
+            //     description: "播放视频时,自动开启静音",
+            //     type: "checkbox",
+            //     key: "video_mute",
+            //     value: true,
+            // },
+            {
                 title: "忽略题目",
                 description: "自动挂机时,忽略掉题目不做,直接跳过",
                 type: "checkbox",
