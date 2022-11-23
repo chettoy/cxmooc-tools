@@ -90,7 +90,7 @@ export class CxVideoOptimization implements Mooc {
      */
     protected Api() {
         (<any>Application.GlobalContext).sendTimePack = (time: number, callback: Function) => {
-            if (time == NaN || time == undefined) {
+            if (time !== 0 && !time) {
                 time = parseInt(this.param.duration);
             }
             let playTime = Math.round(time || (this.param.duration - randNumber(1, 2)));
