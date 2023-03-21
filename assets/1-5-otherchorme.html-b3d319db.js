@@ -1,0 +1,1 @@
+import{_ as t,p as o,q as r,R as e,t as c}from"./framework-efe98465.js";const a={},s=e("h2",{id:"待更新",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#待更新","aria-hidden":"true"},"#"),c(" 待更新")],-1),_=e("p",null,"由于世界线回溯被吃啦！",-1),n=[s,_];function h(d,i){return o(),r("div",null,n)}const f=t(a,[["render",h],["__file","1-5-otherchorme.html.vue"]]);export{f as default};
