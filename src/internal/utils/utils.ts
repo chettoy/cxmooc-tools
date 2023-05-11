@@ -3,7 +3,7 @@ import { AppName, Application } from "../application";
 import { SystemConfig } from "@App/config";
 
 export type RequestCallback = (body: any) => void
-export type ErrorCallback = () => void
+export type ErrorCallback = (reason: any) => void
 
 export interface RequestInfo extends RequestInit {
     url?: string
@@ -24,8 +24,8 @@ export class HttpUtils {
                 }
             }).then(body => {
                 info.success && info.success(body)
-            }).catch(() => {
-                info.error && info.error()
+            }).catch(reason => {
+                info.error && info.error(reason)
             });
             return;
         }
@@ -66,7 +66,7 @@ export class HttpUtils {
                         if (info.json) {
                             let ret = JSON.parse(response.responseText);
                             if (HttpUtils.errorCode(ret)) {
-                                info.error && info.error();
+                                info.error && info.error(ret);
                                 return
                             }
                             info.success && info.success(ret);
@@ -74,7 +74,7 @@ export class HttpUtils {
                             info.success && info.success(response.responseText);
                         }
                     } else {
-                        info.error && info.error();
+                        info.error && info.error(response);
                     }
                 }
             };
@@ -85,13 +85,13 @@ export class HttpUtils {
                 if (data.code == 0) {
                     if (info.json) {
                         if (HttpUtils.errorCode(data.body)) {
-                            info.error && info.error();
+                            info.error && info.error(data.body);
                             return
                         }
                     }
                     info.success && info.success(data.body);
                 } else {
-                    info.error && info.error();
+                    info.error && info.error(data);
                 }
             });
             client.Send({

@@ -168,7 +168,7 @@ export class ToolsQuestionBank implements QuestionBank {
                         success: (result: any) => {
                             Application.App.log.Info("答案已记录");
                         },
-                        error: () => {
+                        error: (e: any) => {
                             Application.App.log.Info("答案未记录");
                         }
                     });
@@ -210,7 +210,8 @@ export class ToolsQuestionBank implements QuestionBank {
                         return resolve({ status: retStatus, answer: answer });
                     }
                 },
-                error: () => {
+                error: (e: any) => {
+                    console.log(e);
                     return resolve({ status: "network", answer: answer });
                 }
             });
