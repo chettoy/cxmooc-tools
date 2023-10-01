@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "网课小工具(remastered)",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)",
   "icons": {
     "16": "img/logo.png",
@@ -21,7 +21,9 @@
     {
       "matches": [
         "*://*/mycourse/studentstudy?*",
+        "*://*/mooc-ans/mycourse/studentstudy?*",
         "*://*/work/doHomeWorkNew?*",
+        "*://*/mooc-ans/mooc2/work/dowork?*",
         "*://*/work/selectWorkQuestionYiPiYue?*",
         "*://*/exam/test/reVersionTestStartNew?*",
         "*://*/exam-ans/exam/test/reVersionTestStartNew*",
@@ -85,7 +87,7 @@
       "use_dynamic_url": false
     }
   ],
-  "homepage_url": "https://err.pw/cxmooc-tools/?v=3.0.0b2",
+  "homepage_url": "https://err.pw/cxmooc-tools/?v=3.1.0",
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
   }

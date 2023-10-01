@@ -208,7 +208,7 @@ export class PageLog implements Logger {
     protected toStr(...args: any): string {
         let text = "";
         for (let i = 0; i < args.length; i++) {
-            if (typeof args[i] == "object") {
+            if (typeof args[i] == "object" && args[i] !== null) {
                 text += args[i].toString() + "\n";
             } else {
                 text += args[i] + "\n";
@@ -218,6 +218,16 @@ export class PageLog implements Logger {
     }
 
     public Debug(...args: any): Logger {
+        if (Application.App.debug) {
+            let text = this.toStr(...args);
+            let display = () =>
+                this.first(text, "#66CCFF", "rgba(121, 187, 255, 0.2)");
+            if (this.el) {
+                display();
+            } else {
+                this.queue.push(display);
+            }
+        }
         console.info("[debug", this.getNowTime(), "]", ...args);
         return this;
     }

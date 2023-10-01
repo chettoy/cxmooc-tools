@@ -20,6 +20,8 @@ export class mooc implements Launcher {
                 if ((<MoocTaskSet>mooc).Next != undefined) {
                     this.runMoocTask(<MoocTaskSet>mooc);
                 }
+            } else {
+                Application.App.log.Debug("CreateMooc is null");
             }
         } catch (e) {
             Application.App.log.Fatal("扩展发生了一个致命错误:", e);

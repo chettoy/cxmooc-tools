@@ -8,16 +8,26 @@ import { TaskType } from "@App/internal/app/task";
 
 export class CxDocumentTask extends CxTask {
     protected time: NodeJS.Timer;
+    protected prevTop: Number;
 
     public Start(): Promise<void> {
         return new Promise(resolve => {
+            let conWin = this.context.document.getElementById("panView").contentWindow;
+            this.prevTop = conWin.document.documentElement.scrollTop;
             let next = () => {
-                let el = this.context.document.querySelector(".imglook > .mkeRbtn");
-                if (el.style.visibility == "hidden") {
+                conWin.scrollTo({
+                    top: conWin.document.documentElement.scrollHeight - conWin.innerHeight,
+                    left: 0,
+                    behavior: "smooth"
+                });
+                if (conWin.document.documentElement.scrollTop + conWin.innerHeight + 1 > conWin.document.documentElement.scrollHeight) {
+                    conWin.document.documentElement.scrollTo({
+                        top: this.prevTop,
+                        behavior: "smooth"
+                    });
                     this.callEvent("complete");
                     return;
                 }
-                el.click();
                 this.time = this.context.setTimeout(next, randNumber(1, 5) * 1000);
                 resolve();
             };

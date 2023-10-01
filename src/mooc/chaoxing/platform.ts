@@ -11,7 +11,9 @@ export class CxPlatform implements MoocFactory {
     public CreateMooc(): Mooc {
         let url = document.URL;
         let mooc: Mooc = null;
+        Application.App.log.Debug("Checking cx mooc: " + url);
         if (url.indexOf("mycourse/studentstudy?") > 0) {
+            Application.App.log.Debug("cx crouse");
             new VCode(new CxCourseVCode());//添加打码组件
             mooc = new CxCourse();
         } else if (url.indexOf("ananas/modules/video/index.html") > 0) {
@@ -30,6 +32,7 @@ export class CxPlatform implements MoocFactory {
             mooc = new Exam();
         }
         if (mooc) {
+            Application.App.log.Debug("CreateMooc=cx");
             Application.App.config.SetNamespace("cx");
         }
         return mooc;

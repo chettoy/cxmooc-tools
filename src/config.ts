@@ -14,16 +14,19 @@ interface PlatformConfig {
 }
 
 export class SystemConfig {
-    public static version = 3.0;
+    public static version = 3.1;
     public static url = "https://cx.icodef.com/";
-    public static hotVersion = "3.0.0";
+    public static hotVersion = "3.1.0";
     //TODO:优化规则,可以通过ci自动生成匹配规则到tampermonkey和manifest文件中
     public static match: { [key: string]: Array<string> } = {
         "cx": [
             "*://*/mycourse/studentstudy?*",
+            "*://*/mooc-ans/mycourse/studentstudy?*",
             "*://*/work/doHomeWorkNew?*",
+            "*://*/mooc-ans/mooc2/work/dowork?*",
             "*://*/work/selectWorkQuestionYiPiYue?*",
             "*://*/exam/test/reVersionTestStartNew?*",
+            "*://*/exam-ans/exam/test/reVersionTestStartNew*",
             "*://*/ztnodedetailcontroller/visitnodedetail?*",
             "*://*/antispiderShowVerify.ac*",
             "*://*/html/processVerify.ac?*",
@@ -54,7 +57,7 @@ export class SystemConfig {
                 description: "进入一个页面就会自动开始挂机,完成一个任务之后会自动进行下一个",
                 type: "checkbox",
                 key: "auto",
-                value: true,
+                value: false,
             },
             // {
             //     title: "视频静音",

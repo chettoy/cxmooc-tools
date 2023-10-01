@@ -10,6 +10,7 @@ import {
     PushAnswer
 } from "@App/internal/app/question";
 import { CreateNoteLine } from "./utils";
+import { Application } from "@App/internal/application";
 
 //TODO: 优化
 export class CxQuestionFactory {
@@ -196,6 +197,7 @@ abstract class cxQuestion implements Question {
     }
 
     public AddNotice(str: string) {
+        Application.App.log.Debug("AddNotice=" + str);
         CxQuestionFactory.AddNotice(this.el, str);
     }
 
@@ -254,13 +256,27 @@ class cxSelectQuestion extends cxQuestion implements Question {
     }
 
     protected getOption(el: HTMLElement): string {
-        return el.querySelector("input").value;
+        console.log(el);
+        if (el.querySelector("input")) {
+            return el.querySelector("input").value;
+        } else if (el.querySelector(".num_option")) {
+            return el.querySelector(".num_option").getAttribute("data");
+        } else {
+            Application.App.log.Fatal("getOption failed!")
+            throw new Error();
+        }
     }
 
     protected click(el: HTMLElement, content: string) {
         let ipt = (<HTMLInputElement>el.querySelector("label > input"));
-        if (!ipt.checked) {
-            ipt.click();
+        if (ipt) {
+            if (!ipt.checked) {
+                ipt.click();
+            }
+        } else if (el.role === "checkbox") {
+            if (!el.ariaChecked) {
+                el.click();
+            }
         }
         this.AddNotice(this.getOption(el) + ":" + content);
     }
@@ -332,8 +348,14 @@ class cxJudgeQuestion extends cxSelectQuestion implements Question {
 
     protected click(el: HTMLElement) {
         let tmpel = (<HTMLInputElement>el.querySelector("label > input,input"));
-        if (!tmpel.checked) {
-            tmpel.click();
+        if (tmpel) {
+            if (!tmpel.checked) {
+                tmpel.click();
+            }
+        } else if (el.role === "checkbox") {
+            if (!el.ariaChecked) {
+                el.click();
+            }
         }
         this.AddNotice(this.getContent(el));
     }

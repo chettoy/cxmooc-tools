@@ -28,6 +28,9 @@ export class CxVideoOptimization implements Mooc {
             return;
         }
         Application.App.log.Debug("hook cx video");
+        // Application.App.log.Info("视频工具已失效");
+        return;
+
         let dataHook = new Hook("decode", (<any>Application.GlobalContext).Ext);
         let self = this;
         dataHook.Middleware(function (next: Context, ...args: any) {
@@ -211,8 +214,9 @@ export class Video extends CxTask {
     }
 
     protected initPlayer() {
-        this.playbackRate = this._playbackRate;
-        this.muted = this._muted;
+        // TODO
+        // this.playbackRate = this._playbackRate;
+        // this.muted = this._muted;
     }
 
     /**

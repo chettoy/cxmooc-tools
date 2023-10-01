@@ -65,5 +65,5 @@ async function init() {
     application.run();
 }
 
-console.log("start.js called --- init...")
+console.log(`start.js called on ${document.URL} --- init...`)
 init();

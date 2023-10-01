@@ -149,7 +149,7 @@ export class ToolsQuestionBank implements QuestionBank {
                 let val = topic[t];
                 body += "topic[" + (t - index) + "]=" + encodeURIComponent((val.topic)) + "&type[" + (t - index) + "]=" + val.type + "&";
             }
-            Application.App.log.Debug("请求题库", {body});
+            Application.App.log.Debug("请求题库", {body}, JSON.stringify(topic));
             HttpUtils.HttpPost(SystemConfig.url + "v2/answer?platform=" + this.platform, body, {
                 headers: {
                     "Authorization": Application.App.config.vtoken,
@@ -327,7 +327,7 @@ export class ToolsQuestionBankFacade implements QuestionBankFacade {
         this.bank.Answer(topic, (ret: { status: QuestionStatus, answer: Answer[] }): Promise<void> => {
             return new Promise(async (resolve) => {
                 if (ret.status != "processing") {
-                    Application.App.log.Debug("题库返回", ret);
+                    Application.App.log.Debug("题库返回", ret, JSON.stringify(ret));
                     if (ret.status != "success" || status == "success") {
                         callback(ret.status);
                         return resolve();
