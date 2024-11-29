@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         超星慕课小工具(remastered)
-// @namespace    https://github.com/chettoy/cxmooc-tools
-// @version      3.00
-// @description  一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)
-// @author       CodFrm, chettoy
+// @name         超星慕课小工具
+// @namespace    https://github.com/CodFrm/cxmooc-tools
+// @version      2.10
+// @description  一个超星慕课刷课工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动)
+// @author       CodFrm
 // @run-at       document-start
 // @match        *://*/mycourse/studentstudy?*
 // @match        *://*/ztnodedetailcontroller/visitnodedetail?*

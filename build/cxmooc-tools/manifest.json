@@ -1,32 +1,30 @@
 {
-  "manifest_version": 3,
-  "name": "网课小工具(remastered)",
-  "version": "3.1.0",
-  "description": "一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)",
+  "manifest_version": 2,
+  "name": "网课小工具",
+  "version": "2.5.2",
+  "description": "一个 大学生网课 学习工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动)",
   "icons": {
     "16": "img/logo.png",
     "48": "img/logo.png",
     "128": "img/logo.png"
   },
-  "action": {
+  "browser_action": {
     "default_icon": "img/logo.png",
     "default_title": "网课小工具",
     "default_popup": "src/popup.html"
   },
   "background": {
-    "service_worker": "src/background.js",
-    "type": "module"
+    "scripts": [
+      "src/background.js"
+    ]
   },
   "content_scripts": [
     {
       "matches": [
         "*://*/mycourse/studentstudy?*",
-        "*://*/mooc-ans/mycourse/studentstudy?*",
         "*://*/work/doHomeWorkNew?*",
-        "*://*/mooc-ans/mooc2/work/dowork?*",
         "*://*/work/selectWorkQuestionYiPiYue?*",
         "*://*/exam/test/reVersionTestStartNew?*",
-        "*://*/exam-ans/exam/test/reVersionTestStartNew*",
         "*://*/ztnodedetailcontroller/visitnodedetail?*",
         "*://*/antispiderShowVerify.ac*",
         "*://*/html/processVerify.ac?*",
@@ -51,44 +49,11 @@
     "storage",
     "contextMenus",
     "notifications",
-    "scripting"
+    "<all_urls>"
   ],
-  "host_permissions": [
-    "*://*.chaoxing.com/*",
-    "*://*/mycourse/studentstudy?*",
-    "*://*/work/doHomeWorkNew?*",
-    "*://*/work/selectWorkQuestionYiPiYue?*",
-    "*://*/exam/test/reVersionTestStartNew?*",
-    "*://*/exam-ans/exam/test/reVersionTestStartNew*",
-    "*://*/ztnodedetailcontroller/visitnodedetail?*",
-    "*://*/antispiderShowVerify.ac*",
-    "*://*/html/processVerify.ac?*",
-    "*://*/exam/test/reVersionPaperMarkContentNew?*",
-    "*://*/ananas/modules/*/index.html?*",
-    "*://*/exam/test?*",
-    "*://*/course/*.html?*",
-    "*://examh5.zhihuishu.com/stuExamWeb.html*",
-    "*://onlineexamh5new.zhihuishu.com/stuExamWeb.html*",
-    "*://studyh5.zhihuishu.com/videoStudy.html*",
-    "*://www.icourse163.org/learn/*",
-    "*://www.icourse163.org/spoc/learn/*"
-  ],
-  "optional_host_permissions": [],
   "web_accessible_resources": [
-    {
-      "resources": [
-        "src/mooc.js",
-        "src/mooc.js.map",
-        "src/start.js.map"
-      ],
-      "matches": [
-        "*://*/*"
-      ],
-      "use_dynamic_url": false
-    }
+    "src/mooc.js"
   ],
-  "homepage_url": "https://err.pw/cxmooc-tools/?v=3.1.0",
-  "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
-  }
+  "homepage_url": "https://cx.icodef.com",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

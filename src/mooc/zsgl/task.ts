@@ -1,73 +1,62 @@
-import { CssBtn } from "@App/mooc/chaoxing/utils";
+import { Task, TaskEvent } from "@App/internal/app/task";
+import { CssBtn } from "./utils";
 import { createBtn, get } from "@App/internal/utils/utils";
 import { Application } from "@App/internal/application";
-import { Task, TaskEvent } from "@App/internal/app/task";
 
-export abstract class CxTask extends Task {
-    public jobIndex: number;
-    public taskinfo: any;
-    protected context: any;
-    public done: boolean;
-
-    public constructor(context: any, taskinfo: any) {
+export abstract class zsglTask extends Task {
+    public jobIndex: Number
+    public taskInfo: any
+    protected context: any
+    public done: boolean 
+    public constructor(context:any,taskInfo:any) {
         super();
-        this.taskinfo = taskinfo;
-        this.context = context;
-        if (this.taskinfo.job) {
-            this.done = false;
-        } else {
-            this.done = true;
+        this.context = context
+        this.taskInfo = taskInfo
+        if(this.taskInfo?.job){
+            this.done = false
+        }else{
+            this.done = true
         }
     }
 
-    protected callEvent(event: TaskEvent, ...args: any) {
-        if (event == "complete") {
-            this.done = true;
+    protected callEvent(event: TaskEvent, ...args: any): void {
+        if(event == "complete"){
+            this.done = true
         }
         super.callEvent(event, ...args);
     }
-
-    public Init(): Promise<any> {
-        return new Promise(resolve => {
-            resolve();
-        });
+    public async Init(): Promise<any>{
+        
     }
-
-    public abstract Start(): Promise<any>
-
     public Submit(): Promise<void> {
         return new Promise(resolve => {
-            resolve();
-        });
+            resolve()
+        })
     }
-
-    //TODO:停止
     public Stop(): Promise<void> {
         return new Promise(resolve => {
             resolve();
         });
     }
-
-    public Done(): boolean {
+        public Done(): boolean {
         return this.done;
     }
 }
 
-export class CxTaskControlBar {
-    public task: CxTask;
+export class zsglTaskController{
+        public task: zsglTask;
     protected prev: HTMLElement;
-
-    constructor(prev: HTMLElement, task: CxTask) {
-        this.task = task;
-        this.prev = document.createElement("div");
+    constructor(prev: HTMLElement, task: zsglTask) {
+        this.task=task
+        this.prev = prev
         prev.style.textAlign = "center";
         prev.style.width = "100%";
         prev.prepend(this.prev);
         this.defaultBtn();
     }
-
-    public defaultBtn() {
-        let startBtn = CssBtn(createBtn(Application.App.config.auto ? "暂停挂机" : "开始挂机", "点击开始自动挂机", "cx-btn"));
+   public defaultBtn() {
+        let startBtn = CssBtn(createBtn(Application.App.config.auto ? "暂停挂机" : "开始挂机", "点击开始自动挂机", "zsgl-btn"));
+        startBtn.innerText = "开始"
         startBtn.onclick = () => {
             if (startBtn.innerText == '暂停挂机') {
                 Application.App.config.auto = false;
@@ -84,19 +73,19 @@ export class CxTaskControlBar {
         };
         this.prev.append(startBtn);
     }
-
+    
     public append(el: HTMLElement): void {
         this.prev.append(el);
     }
 
     public download(): HTMLElement {
-        if (!this.task.taskinfo.property.objectid) {
+        if (!this.task.taskInfo.property.objectid) {
             return;
         }
         let download = CssBtn(createBtn("下载资源", "我要下载下来好好学习", "cx-btn"));
         download.style.background = "#999999";
         download.onclick = () => {
-            (<any>get("https://mooc1-1.chaoxing.com/ananas/status/" + this.task.taskinfo.property.objectid, (data: string) => {
+            (<any>get("https://mooc1-1.chaoxing.com/ananas/status/" + this.task.taskInfo.property.objectid, (data: string) => {
                 let json = JSON.parse(data);
                 prompt("如果打开下载失败，请复制下面链接手动下载", json.download);
                 window.open(json.download);

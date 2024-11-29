@@ -4,8 +4,6 @@ import { Application, Frontend } from "@App/internal/application";
 import { mooc } from "@App/mooc/mooc";
 import { CxPlatform } from "@App/mooc/chaoxing/platform";
 
-import initWasm, { CxUncover } from "@App/fxxkmod";
-import wasmData from "@App/fxxkmod/index_bg.wasm";
 
 let logger: Logger;
 if (top == self) {
@@ -19,8 +17,5 @@ let component = new Map<string, any>().
     set("config", new ChromeConfigItems(NewFrontendGetConfig())).
     set("logger", logger);
 
-initWasm(wasmData).then(() => {
-    let app = new Application(Frontend, new mooc(new CxPlatform()), component);
-    logger.Info("Fxxk mod " + CxUncover.version_name());
-    app.run();
-});
+let app = new Application(Frontend, new mooc(new CxPlatform()), component);
+app.run();

@@ -57,7 +57,7 @@ export abstract class Topic {
         });
     }
 
-    public CollectAnswer(): Promise<void> {
+    public CollectAnswer(): Promise<any> {
         return new Promise(resolve => {
             Application.App.log.Debug("收集题目答案", this.context);
             this.addQuestion();

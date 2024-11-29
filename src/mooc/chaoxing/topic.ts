@@ -1,15 +1,15 @@
-import { CssBtn } from "./utils";
-import { createBtn } from "@App/internal/utils/utils";
-import { Application } from "@App/internal/application";
+import {CssBtn} from "./utils";
+import {createBtn} from "@App/internal/utils/utils";
+import {Application} from "@App/internal/application";
 import {
     SwitchTopicType,
     Question,
     QuestionBankFacade, QuestionStatus, QuestionStatusString
 } from "@App/internal/app/question";
-import { CxQuestionFactory } from "./question";
-import { Topic, QueryQuestions } from "@App/internal/app/topic";
-import { CxTaskControlBar, CxTask } from "@App/mooc/chaoxing/task";
-import { TaskType } from "@App/internal/app/task";
+import {CxQuestionFactory} from "./question";
+import {Topic, QueryQuestions} from "@App/internal/app/topic";
+import {CxTaskControlBar, CxTask} from "@App/mooc/chaoxing/task";
+import {TaskType} from "@App/internal/app/task";
 
 export class CxTopicControlBar extends CxTaskControlBar {
     public defaultBtn() {
@@ -39,11 +39,11 @@ export class TopicAdapter extends CxTask {
         this.topic = topic;
     }
 
-    public Init(): Promise<void> {
-        return new Promise<void>(async resolve => {
+    public Init(): Promise<any> {
+        return new Promise<any>(async resolve => {
             Application.App.log.Debug("题目信息", this.taskinfo);
             await this.topic.Init();
-            resolve();
+            resolve(undefined);
         });
     }
 
@@ -109,21 +109,21 @@ export class CxCourseTopic extends Topic {
         answer.CheckCourse();
     }
 
-    public Init(): Promise<void> {
-        return new Promise<void>(resolve => {
+    public Init(): Promise<any> {
+        return new Promise<any>(resolve => {
             let timer = this.context.setInterval(async () => {
                 if (this.context.document.readyState == "complete") {
                     this.context.clearInterval(timer);
                     if (this.context.document.URL.indexOf("selectWorkQuestionYiPiYue") > 0) {
                         await this.CollectAnswer();
                     }
-                    resolve();
+                    resolve(undefined);
                 }
             }, 500);
         });
     }
 
-    public async QueryAnswer(): Promise<QuestionStatus> {
+    public QueryAnswer(): Promise<QuestionStatus> {
         if (this.context.document.URL.indexOf("selectWorkQuestionYiPiYue") > 0) {
             return null;
         }
@@ -183,13 +183,18 @@ export class ExamTopic extends Topic implements QueryQuestions {
         return ret;
     }
 
-    public async Init(): Promise<void> {
+    public Init(): Promise<any> {
         if (document.URL.indexOf("exam/test/reVersionPaperMarkContentNew") > 0) {
             this.CollectAnswer();
         }
+        return null
     }
 
-    public async Submit(): Promise<void> { }
+    public Submit(): Promise<any> {
+        return new Promise(resolve => {
+            resolve(undefined);
+        });
+    }
 }
 
 export class HomeworkTopic extends CxCourseTopic {
@@ -198,8 +203,8 @@ export class HomeworkTopic extends CxCourseTopic {
         super(content, answer);
     }
 
-    public Init(): Promise<void> {
-        return new Promise<void>(resolve => {
+    public Init(): Promise<any> {
+        return new Promise<any>(resolve => {
             if (!(<HTMLInputElement>document.querySelector("input#workRelationId"))) {
                 this.CollectAnswer();
             }
@@ -207,7 +212,7 @@ export class HomeworkTopic extends CxCourseTopic {
         });
     }
 
-    public Submit(): Promise<void> {
+    public Submit(): Promise<any> {
         return new Promise(resolve => {
             resolve();
         });

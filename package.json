@@ -1,58 +1,49 @@
 {
   "name": "cxmooc-tools",
-  "version": "3.1.0",
-  "description": "一个 大学生网课 学习工具, 衍生版本 (੧ᐛ੭挂科模式,启动)",
+  "version": "2.5.0",
+  "description": "一个 大学生网课 学习工具,火狐,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库,验证码自动打码(੧ᐛ੭挂科模式,启动)",
   "main": "mooc.js",
   "scripts": {
     "test": "jest",
     "build": "webpack --mode production --config webpack.config.js",
     "tampermonkey": "webpack --mode development --config webpack.tampermonkey.js",
-    "build-tampermonkey": "webpack --mode production --config webpack.tampermonkey.js",
     "dev": "webpack --mode development --config webpack.dev.js",
     "pack": "tsc src/internal/pack-crx.ts && node src/internal/pack-crx.js",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "docs:publish": "tsc src/internal/publish-docs.ts && node src/internal/publish-docs.js"
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chettoy/cxmooc-tools.git"
+    "url": "git+https://github.com/CodFrm/cxmooc-tools.git"
   },
   "author": "CodFrm",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chettoy/cxmooc-tools/issues"
+    "url": "https://github.com/CodFrm/cxmooc-tools/issues"
   },
-  "homepage": "https://github.com/chettoy/cxmooc-tools#readme",
+  "homepage": "https://github.com/CodFrm/cxmooc-tools#readme",
   "devDependencies": {
-    "@types/chrome": "^0.0.246",
-    "@types/gh-pages": "^3.2.2",
-    "@types/jest": "^29.5.5",
-    "@types/node-telegram-bot-api": "^0.61.8",
-    "@vuepress/plugin-back-to-top": "^2.0.0-beta.67",
-    "@vuepress/plugin-google-analytics": "^2.0.0-beta.67",
-    "@wasm-tool/wasm-pack-plugin": "^1.7.0",
-    "crx": "^5.0.1",
-    "css-loader": "^6.8.1",
-    "gh-pages": "^6.0.0",
-    "html-webpack-plugin": "^5.5.3",
-    "jest": "^29.7.0",
-    "node-fetch": "^3.3.2",
-    "node-telegram-bot-api": "^0.63.0",
-    "style-loader": "^3.3.3",
-    "ts-jest": "^29.1.1",
-    "ts-loader": "^9.4.4",
-    "typescript": "^5.2.2",
-    "vue-loader": "^17.2.2",
-    "vue-template-compiler": "^2.7.14",
-    "vuepress": "^2.0.0-beta.67",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-merge": "^5.9.0"
+    "@types/chrome": "0.0.103",
+    "@types/jest": "^25.2.3",
+    "@vuepress/plugin-back-to-top": "^1.7.1",
+    "@vuepress/plugin-google-analytics": "^1.7.1",
+    "crx": "^4.0.1",
+    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^25.5.4",
+    "style-loader": "^0.23.1",
+    "ts-jest": "^25.5.1",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.9.7",
+    "vuepress": "^1.7.1",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "js-base64": "^3.7.5",
+    "@types/js-base64": "^2.3.2",
     "md5": "^2.3.0",
-    "vue": "^3.2.47"
+    "node-telegram-bot-api": "^0.30.0",
+    "vue": "^2.6.12"
   }
 }

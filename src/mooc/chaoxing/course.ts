@@ -1,9 +1,9 @@
-import { Application } from "@App/internal/application";
-import { CxTask } from "@App/mooc/chaoxing/task";
-import { TaskFactory } from "@App/mooc/chaoxing/factory";
-import { Mooc, MoocTaskSet, MoocEvent } from "@App/internal/app/mooc";
-import { Task } from "@App/internal/app/task";
-import { EventListener } from "@App/internal/utils/event";
+import {Application} from "@App/internal/application";
+import {CxTask} from "@App/mooc/chaoxing/task";
+import {TaskFactory} from "@App/mooc/chaoxing/factory";
+import {Mooc, MoocTaskSet, MoocEvent} from "@App/internal/app/mooc";
+import {Task} from "@App/internal/app/task";
+import {EventListener} from "@App/internal/utils/event";
 
 //课程任务
 export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {
@@ -14,7 +14,6 @@ export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {
     public Init(): Promise<any> {
         return new Promise(resolve => {
             let first = true;
-            Application.App.log.Debug("CxCourse Init");
             document.addEventListener("load", ev => {
                 let el = <HTMLIFrameElement>(ev.srcElement || ev.target);
                 if (el.id == "iframe") {
@@ -74,7 +73,6 @@ export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {
             // 任务工厂去创建对应的任务对象
             task = TaskFactory.CreateCourseTask(iframeWindow, value);
             if (!task) {
-                Application.App.log.Debug("!task: " + JSON.stringify(value));
                 continue;
             }
             task.jobIndex = index;
@@ -127,8 +125,7 @@ export class CxCourse extends EventListener<MoocEvent> implements MoocTaskSet {
 // 考试
 export class CxExamTopic implements Mooc {
     public Init(): any {
-        let _init = (() => {
-            Application.App.log.Info("Exam");
+        window.addEventListener("load", () => {
             let el = <HTMLInputElement>document.querySelector("#paperId");
             let info = "0";
             if (el) {
@@ -146,11 +143,6 @@ export class CxExamTopic implements Mooc {
                 }
             }
         });
-        if (document.readyState === "complete") {
-            _init();
-        } else {
-            window.addEventListener("load", _init);
-        }
     }
 }
 

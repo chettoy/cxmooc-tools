@@ -1,6 +1,5 @@
 tg-bot.js
 pack-crx.js
-publish-docs.js
 config.js
 server/server
 server/config.yaml
@@ -9,8 +8,6 @@ node_modules
 build/cxmooc-tools/src/*.*
 build/*.js
 docs/.vuepress/dist/
-docs/.vuepress/.temp
-docs/.vuepress/.cache
 .vscode/
 coverage
 typings
@@ -19,6 +16,5 @@ certificate
 *.pem
 *.crx
 *.zip
-*.zst
 *.tar.gz
 *.map
