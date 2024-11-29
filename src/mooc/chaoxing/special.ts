@@ -1,33 +1,23 @@
-import { CxTaskControlBar, CxTask } from "@App/mooc/chaoxing/task";
-import { createBtn, get, isPhone, protocolPrompt, randNumber } from "@App/internal/utils/utils";
-import { Application } from "@App/internal/application";
-import { CxVideoOptimization, Video } from "@App/mooc/chaoxing/video";
-import { CssBtn } from "@App/mooc/chaoxing/utils";
-import { Context, Hook } from "@App/internal/utils/hook";
-import { TaskType } from "@App/internal/app/task";
+import {CxTaskControlBar, CxTask} from "@App/mooc/chaoxing/task";
+import {createBtn, get, isPhone, protocolPrompt, randNumber} from "@App/internal/utils/utils";
+import {Application} from "@App/internal/application";
+import {CxVideoOptimization, Video} from "@App/mooc/chaoxing/video";
+import {CssBtn} from "@App/mooc/chaoxing/utils";
+import {Context, Hook} from "@App/internal/utils/hook";
+import {TaskType} from "@App/internal/app/task";
 
 export class CxDocumentTask extends CxTask {
     protected time: NodeJS.Timer;
-    protected prevTop: Number;
 
-    public Start(): Promise<void> {
+    public Start(): Promise<any> {
         return new Promise(resolve => {
-            let conWin = this.context.document.getElementById("panView").contentWindow;
-            this.prevTop = conWin.document.documentElement.scrollTop;
             let next = () => {
-                conWin.scrollTo({
-                    top: conWin.document.documentElement.scrollHeight - conWin.innerHeight,
-                    left: 0,
-                    behavior: "smooth"
-                });
-                if (conWin.document.documentElement.scrollTop + conWin.innerHeight + 1 > conWin.document.documentElement.scrollHeight) {
-                    conWin.document.documentElement.scrollTo({
-                        top: this.prevTop,
-                        behavior: "smooth"
-                    });
+                let el = this.context.document.querySelector(".imglook > .mkeRbtn");
+                if (el.style.visibility == "hidden") {
                     this.callEvent("complete");
                     return;
                 }
+                el.click();
                 this.time = this.context.setTimeout(next, randNumber(1, 5) * 1000);
                 resolve();
             };

@@ -28,9 +28,6 @@ export class CxVideoOptimization implements Mooc {
             return;
         }
         Application.App.log.Debug("hook cx video");
-        // Application.App.log.Info("视频工具已失效");
-        return;
-
         let dataHook = new Hook("decode", (<any>Application.GlobalContext).Ext);
         let self = this;
         dataHook.Middleware(function (next: Context, ...args: any) {
@@ -93,7 +90,7 @@ export class CxVideoOptimization implements Mooc {
      */
     protected Api() {
         (<any>Application.GlobalContext).sendTimePack = (time: number, callback: Function) => {
-            if (time !== 0 && !time) {
+            if (time == NaN || time == undefined) {
                 time = parseInt(this.param.duration);
             }
             let playTime = Math.round(time || (this.param.duration - randNumber(1, 2)));
@@ -214,9 +211,8 @@ export class Video extends CxTask {
     }
 
     protected initPlayer() {
-        // TODO
-        // this.playbackRate = this._playbackRate;
-        // this.muted = this._muted;
+        this.playbackRate = this._playbackRate;
+        this.muted = this._muted;
     }
 
     /**

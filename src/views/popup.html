@@ -299,14 +299,14 @@
         border: none;
         background: none;
         color: inherit;
+        vertical-align: middle;
         position: relative;
         z-index: 1;
-        backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         -moz-osx-font-smoothing: grayscale;
     }
 
-    .one_title .button>span {
+    .one_title .button > span {
         vertical-align: middle;
     }
 
@@ -357,50 +357,78 @@
 </style>
 
 <body>
-    <div class="head">
-        <h3 class="title"><span>网课</span>小工具 <i>(Remastered)</i></h3>
-    </div>
-    <div class="content_top center-float-left">
-        <div class="content_topleft">
-            <h4 class="one_title">公告</h4>
-            <div id="injection" class="mt10">
+<div class="head">
+    <h3 class="title"><span>网课</span>小工具</h3>
+</div>
+<div class="content_top center-float-left">
+    <div class="content_topleft">
+        <h4 class="one_title">公告</h4>
+        <div id="injection" class="mt10">
 
-            </div>
         </div>
     </div>
-    <!--插件配置盒子-->
-    <div class="content_bottom">
-        <h4 class="one_title">
-            <div class="one_title_show">
-                <span>插件配置:</span>
-                <input type="password" id="vtoken" class="input_text edit" placeholder="token" config-key="vtoken"
-                    style="font-size: 12px;">
-            </div>
-        </h4>
-        <div class="page">
-            <div id="platform-config">
-
-            </div>
-            <span style="margin-top: 6px;">Tips:鼠标放置选项上,可以查看详细内容哦</span>
+</div>
+<!--插件配置盒子-->
+<div class="content_bottom">
+    <h4 class="one_title">
+        <div class="one_title_show">
+            <span>插件配置:</span>
+            <input type="password" id="vtoken" class="input_text edit" placeholder="token" config-key="vtoken"
+                   style="font-size: 12px;">
         </div>
+    </h4>
+    <div class="page">
+        <div id="platform-config">
+            <div class="platform-header">
+                <div v-for="(config,key) in configs" :key="key"
+                     v-bind:class="[selectKey==key?'platform-header-item active':'platform-header-item']"
+                     @click="changeTab(key)">
+                    <div class="platform-name">{{ config.name }}</div>
+                </div>
+            </div>
+            <div class="platform-content">
+                <div v-for="(config,key) in configs" :key="key" class="platform-items">
+                    <div v-if="selectKey==key" v-for="(item,index) in config.items" :key="item.key"
+                         class="platform-item">
+                        <div v-if="item.type=='text'">
+                            <label :for="item.key" :title="item.description">{{ item.title }}:</label>
+                            <input type="text" class="input_text" :id="item.key"
+                                   :title="item.description"
+                                   v-model="item.value"
+                                   @input="change(key,item.key,'text',item.value,index,item.prompt)">
+                            <label v-if="item.unit!=''" :for="item.key" :title="item.description">{{
+                                    item.unit
+                                }}
+                            </label>
+                        </div>
+                        <div v-else-if="item.type== 'checkbox'">
+                            <input class="rdo" type="checkbox" :id="item.key"
+                                   v-model="item.value"
+                                   @change="change(key,item.key,'checkbox',item.value,index,item.prompt)">
+                            <label class="shou" :for="item.key" :title="item.description">{{ item.title }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span style="margin-top: 6px;">Tips:鼠标放置选项上,可以查看详细内容哦</span>
     </div>
-    <!--其他模块盒子-->
-    <div class="bottom_div">
-        <h4 class="one_title"><span>其他:</span></h4>
-        <p>这是一个由 @chettoy 维护的版本。</p>
-        <p>本扩展基于 <i>cxmooc-tools</i> ，下面是原项目相关信息。</p>
-        <ul>
-            <li><a class="three_font" href="https://github.com/CodFrm/cxmooc-tools"
-                    target="_black">CodFrm/cxmooc-tools</a></li>
-            <li><a class="three_font" href="https://github.com/CodFrm/cxmooc-tools/blob/master/LICENSE"
-                    target="_black">license</a>
-            </li>
-        </ul>
-    </div>
-    <div style="padding:0 20px;">
-        <img id="tiku" src="./../img/success.svg">
-        <p id="version" class="ps"></p>
-    </div>
+</div>
+<!--其他模块盒子-->
+<div class="bottom_div">
+    <h4 class="one_title"><span>其他:</span></h4>
+    <ul>
+        <li><a class="three_font" href="https://github.com/CodFrm/cxmooc-tools" target="_black">GitHub开源地址</a></li>
+        <li><a class="three_font" href="https://cx.icodef.com" target="_black">使用文档</a></li>
+        <li><a class="three_font" href="https://github.com/CodFrm/cxmooc-tools/issues" target="_black">Bug/意见/反馈地址</a>
+        </li>
+    </ul>
+</div>
+<div style="padding:0 20px;">
+    <img id="tiku" src="./../img/success.svg">
+    <p class="ps">PS:本扩展全部是免费的,喜欢的话可以点个好评</p>
+    <p id="version" class="ps"></p>
+</div>
 </body>
 
 </html>

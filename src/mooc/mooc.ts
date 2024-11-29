@@ -6,12 +6,14 @@ export class mooc implements Launcher {
     protected moocFactory: MoocFactory;
 
     constructor(moocFactory: MoocFactory) {
+        console.log("src.mooc.constructor")
         this.moocFactory = moocFactory;
     }
 
     public async start() {
         try {
             let state = document.readyState;
+            console.log("src.mooc.start");
             Application.App.log.Debug("Start document state:", state);
             let mooc = this.moocFactory.CreateMooc();
             if (mooc != null) {
@@ -20,8 +22,6 @@ export class mooc implements Launcher {
                 if ((<MoocTaskSet>mooc).Next != undefined) {
                     this.runMoocTask(<MoocTaskSet>mooc);
                 }
-            } else {
-                Application.App.log.Debug("CreateMooc is null");
             }
         } catch (e) {
             Application.App.log.Fatal("扩展发生了一个致命错误:", e);

@@ -1,8 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
 const htmlWebpackPlugin = require('html-webpack-plugin');
-const wasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
-const { VueLoaderPlugin } = require('vue-loader')
 const home = __dirname + '/src';
 module.exports = {
     entry: {
@@ -15,7 +12,6 @@ module.exports = {
         path: __dirname + '/build/cxmooc-tools/src',
         filename: '[name].js'
     },
-    devtool: "source-map", // eval string is not permitted in manifest_v3 extensions
     plugins: [
         new htmlWebpackPlugin({
             filename: __dirname + '/build/cxmooc-tools/src/popup.html',
@@ -26,51 +22,25 @@ module.exports = {
                 removeComments: true
             },
             chunks: ['popup']
-        }),
-        new wasmPackPlugin({
-            crateDirectory: path.resolve(__dirname, "../chaoxing-rs/fxxkmod"),
-            outDir: "../../cxmooc-tools/src/fxxkmod",
-            extraArgs: "--target web",
-        }),
-        new webpack.DefinePlugin({
-            global: 'window',		// Placeholder for global used in any node_modules
-            __VUE_OPTIONS_API__: true, // (enable/disable Options API support, default: true)
-            __VUE_PROD_DEVTOOLS__: false, // (enable/disable devtools support in production, default: false)
-        }),
-        new VueLoaderPlugin()
+        })
     ],
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    'css-loader',
-                ],
+                use: ['style-loader', 'css-loader'],
             }, {
                 test: /\.ts$/,
-                loader: 'ts-loader',
+                use: 'ts-loader',
                 exclude: /node_modules/,
-                options: { appendTsSuffixTo: [/\.vue$/] },
-            }, {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-                // options: {
-                //     hotReload: false
-                // }
-            }, {
-                test: /\.wasm$/,
-                type: "asset/inline",
             }
         ]
     },
-    experiments: {
-        syncWebAssembly: true
-    },
     resolve: {
-        extensions: ['.ts', '.js', '.wasm'],
+        extensions: ['.ts', '.js'],
         alias: {
             "@App": path.resolve(__dirname, 'src/'),
-            'vue': 'vue/dist/vue.esm-bundler.js',
+            'vue': 'vue/dist/vue.esm.js'
         }
     }
 };

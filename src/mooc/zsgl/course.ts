@@ -3,7 +3,7 @@ import { MoocTaskSet } from './../../internal/app/mooc';
  * @Author: guotao
  * @Date: 2024-11-28 10:17:42
  * @LastEditors: guotao
- * @LastEditTime: 2024-11-28 17:04:33
+ * @LastEditTime: 2024-11-28 17:14:18
  * @FilePath: \zsgl-tools\src\mooc\zsgl\course.ts
  * @Description: 
  * 
@@ -17,6 +17,7 @@ import { CxTask } from '../chaoxing/task';
 import { Task } from '@App/internal/app/task';
 import { zsglTask } from '@App/mooc/zsgl/task';
 import { Application } from '@App/internal/application';
+import { TaskFactory } from '../chaoxing/factory';
 
 // 课程任务
 export class zsglCourse extends EventListener<MoocEvent> implements MoocTaskSet{
@@ -95,40 +96,43 @@ export class zsglCourse extends EventListener<MoocEvent> implements MoocTaskSet{
     SetTaskPointer(index: number): void {
         throw new Error('Method not implemented.');
     }
+    public async OperateCard() {
+        Application.App.log.Info("开始操作任务卡");
+    }
 
     // 操作任务卡,一个页面会包含很多任务,取出来
-    public async OperateCard(iframe: HTMLIFrameElement) {
-        let iframeWindow: any = iframe.contentWindow;
-        // 判断任务的参数
-        if (iframeWindow.mArg == undefined) {
-            let match = iframeWindow.document.body.innerHTML.match(/try{\s+?mArg = (.*?);/);
-            if (!match) {
-                return;
-            }
-            iframeWindow.mArg = JSON.parse(match[1]);
-        }
-        // 任务的属性
-        this.attachments = <Array<any>>iframeWindow.mArg.attachments;
-        this.taskList = new Array();
-        // 构建任务
-        for (let index = 0; index < this.attachments.length; index++) {
-            let value = this.attachments[index];
-            value.defaults = <Array<any>>iframeWindow.mArg.defaults;
-            let task: zsglTask;
-            // 任务工厂去创建对应的任务对象
-            task = TaskFactory.CreateCourseTask(iframeWindow, value);
-            if (!task) {
-                Application.App.log.Debug("!task: " + JSON.stringify(value));
-                continue;
-            }
-            task.jobIndex = index;
-            this.taskList.push(task);
-            task.addEventListener("complete", () => {
-                this.callEvent("taskComplete", index, task);
-            });
-            await task.Init();
-        }
-        this.taskIndex = 0;
-        this.callEvent("reload");
-    }
+    // public async OperateCard(iframe: HTMLIFrameElement) {
+    //     let iframeWindow: any = iframe.contentWindow;
+    //     // 判断任务的参数
+    //     if (iframeWindow.mArg == undefined) {
+    //         let match = iframeWindow.document.body.innerHTML.match(/try{\s+?mArg = (.*?);/);
+    //         if (!match) {
+    //             return;
+    //         }
+    //         iframeWindow.mArg = JSON.parse(match[1]);
+    //     }
+    //     // 任务的属性
+    //     this.attachments = <Array<any>>iframeWindow.mArg.attachments;
+    //     this.taskList = new Array();
+    //     // 构建任务
+    //     for (let index = 0; index < this.attachments.length; index++) {
+    //         let value = this.attachments[index];
+    //         value.defaults = <Array<any>>iframeWindow.mArg.defaults;
+    //         let task: CxTask;
+    //         // 任务工厂去创建对应的任务对象
+    //         task = TaskFactory.CreateCourseTask(iframeWindow, value);
+    //         if (!task) {
+    //             Application.App.log.Debug("!task: " + JSON.stringify(value));
+    //             continue;
+    //         }
+    //         task.jobIndex = index;
+    //         this.taskList.push(task);
+    //         task.addEventListener("complete", () => {
+    //             this.callEvent("taskComplete", index, task);
+    //         });
+    //         await task.Init();
+    //     }
+    //     this.taskIndex = 0;
+    //     this.callEvent("reload");
+    // }
 }
