@@ -1,33 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="generator" content="VuePress 2.0.0-beta.61">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content="VuePress 2.0.0-rc.22" />
     <style>
       :root {
-        --c-bg: #fff;
+        --vp-c-bg: #fff;
       }
-      html.dark {
-        --c-bg: #22272e;
+
+      [data-theme='dark'] {
+        --vp-c-bg: #1b1b1f;
       }
-      html, body {
-        background-color: var(--c-bg);
+
+      html,
+      body {
+        background-color: var(--vp-c-bg);
       }
     </style>
     <script>
-      const userMode = localStorage.getItem('vuepress-color-scheme');
-			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
-				document.documentElement.classList.toggle('dark', true);
-			}
+      const useChoice = localStorage.getItem('vuepress-color-scheme')
+      const systemStatus =
+        'matchMedia' in window
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false
+
+      if (useChoice === 'light') {
+        document.documentElement.dataset.theme = 'light'
+      } else if (useChoice === 'dark' || systemStatus) {
+        document.documentElement.dataset.theme = 'dark'
+      }
     </script>
     <title>超星慕课小工具</title><meta name="description" content="一个 大学生网课 学习工具,Edge,谷歌,油猴支持.全自动任务,视频倍速秒过,作业考试题库(੧ᐛ੭挂科模式,启动)">
-    <link rel="preload" href="/cxmooc-tools/assets/style-c146a382.css" as="style"><link rel="stylesheet" href="/cxmooc-tools/assets/style-c146a382.css">
-    <link rel="modulepreload" href="/cxmooc-tools/assets/app-7e91e6ae.js"><link rel="modulepreload" href="/cxmooc-tools/assets/framework-efe98465.js"><link rel="modulepreload" href="/cxmooc-tools/assets/404.html-f9875e7b.js"><link rel="modulepreload" href="/cxmooc-tools/assets/404.html-ebc5def2.js"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-c3a278d8.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-b0758d96.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-d1b86af4.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-78a9cbbf.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-4-config.html-140479fe.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-5-otherchorme.html-0a8fe17b.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-6-gettoken.html-55213af9.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-7-easychorme.html-7dfe886f.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-8-moocchorme.html-f6bcadc0.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-bbc1b3ec.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/featured.html-82c4a64b.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/qa.html-cb26a8d3.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-18d4c358.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Component.html-acf4c4d2.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Platform.html-1511422e.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/QuestionBank.html-e24a2daa.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-3a857001.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Utils.html-30c5b1b2.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-d5c0cc6c.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-0-developer.html-91a90480.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-f17a94f2.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-e218cc10.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-7cdca9ef.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-85457ed5.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-e2cccf15.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-3f97a208.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-df36f046.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-4a132a5a.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-49758867.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-4-config.html-f165af9c.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-5-otherchorme.html-b3d319db.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-6-gettoken.html-faf08484.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-7-easychorme.html-0f6fad59.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-8-moocchorme.html-c563ccc1.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-610a4518.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/featured.html-30c58781.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/qa.html-1e42b01a.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-b1c3ee7d.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Component.html-d4a70796.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Platform.html-7fa6d7ac.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/QuestionBank.html-838cc8db.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-2631cdea.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Utils.html-93fe2944.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-b8d044c1.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-0-developer.html-311d3938.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-921490af.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-e2e623a9.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-0adb091d.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-9f527933.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-71f62ad0.js" as="script">
+    <link rel="preload" href="/cxmooc-tools/assets/style-DXksDbE_.css" as="style"><link rel="stylesheet" href="/cxmooc-tools/assets/style-DXksDbE_.css">
+    <link rel="modulepreload" href="/cxmooc-tools/assets/app-wFSEqLp_.js"><link rel="modulepreload" href="/cxmooc-tools/assets/404.html-DJV0TSZT.js">
+    <link rel="prefetch" href="/cxmooc-tools/assets/index.html-5aXi_EgR.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-DH-YWh6U.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-B9JQcy0c.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-DeLDpKjB.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-BLO68Az_.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-4-config.html-C9nZqVNv.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-5-otherchorme.html-riq2inJG.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-6-gettoken.html-6LXAsa-H.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-7-easychorme.html-Da8NExrJ.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-8-moocchorme.html-BgynLSQs.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-LksOHcs4.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/featured.html-B3BA9HJt.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/qa.html-BahtLaq8.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Component.html-CV6Vp0Go.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Platform.html-NhL4en3Q.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/QuestionBank.html-BbvNo9pZ.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-BdY00Iji.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/Utils.html-CKT0Qjm0.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-CG42ivaI.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-0-developer.html-Cwde9n0c.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-1-chrome.html-D2fGQbDP.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-2-firefox.html-CwaU2Sw-.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/1-3-tampermonkey.html-BPzC0QhL.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-Ck8zhBym.js" as="script"><link rel="prefetch" href="/cxmooc-tools/assets/index.html-CFO3GOp9.js" as="script">
   </head>
   <body>
-    <div id="app"><!--[--><div class="theme-container"><main class="page"><div class="theme-default-content"><h1>404</h1><blockquote>Looks like we&#39;ve got some broken links.</blockquote><a href="/cxmooc-tools/" class="">Take me home</a></div></main></div><!----><!--]--></div>
-    <script type="module" src="/cxmooc-tools/assets/app-7e91e6ae.js" defer></script>
+    <div id="app"><!--[--><div class="vp-theme-container" vp-container data-v-ec9917b8><main class="page" data-v-ec9917b8><div vp-content data-v-ec9917b8><h1 data-v-ec9917b8>404</h1><blockquote data-v-ec9917b8>There&#39;s nothing here.</blockquote><a class="route-link" href="/cxmooc-tools/" data-v-ec9917b8>Take me home</a></div></main></div><!--[--><!----><!--]--><!--]--></div>
+    <script type="module" src="/cxmooc-tools/assets/app-wFSEqLp_.js" defer></script>
   </body>
 </html>

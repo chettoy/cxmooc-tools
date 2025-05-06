@@ -1,1 +1,0 @@
-import{_ as l,p as n,q as t,R as e}from"./framework-efe98465.js";const o={},_=e("p",null,"本扩展提供多种使用方式 请按照需求查阅相应的文档支持",-1),s=e("ul",null,[e("li",null,"开发者模式"),e("li",null,"Chrome扩展"),e("li",null,"FireFox扩展"),e("li",null,"油猴脚本")],-1),c=[_,s];function i(r,u){return n(),t("div",null,c)}const d=l(o,[["render",i],["__file","index.html.vue"]]);export{d as default};
