@@ -1,25 +1,18 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "noImplicitAny": true,
-        "module": "ES6",
-        "target": "ES2021",
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "allowJs": true,
-        "baseUrl": ".",
-        "paths": {
-            "@App/*": [
-                "src/*"
-            ],
-            "@Test/*": [
-                "tests/*"
-            ]
-        }
-    },
-    "include": [
-        "./src/*.ts",
-        "./src/**/*.ts",
-        "./tests/*.test.ts"
-    ]
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@App/*": ["src/*"],
+      "@Test/*": ["tests/*"]
+    }
+  },
+  "include": ["./src/*.ts", "./src/**/*.ts", "./tests/*.test.ts"]
 }

@@ -92,7 +92,7 @@ export class CxTaskControlBar {
         let download = CssBtn(createBtn("下载资源", "我要下载下来好好学习", "cx-btn"));
         download.style.background = "#999999";
         download.onclick = () => {
-            (<any>get("https://mooc1-1.chaoxing.com/ananas/status/" + this.task.taskinfo.property.objectid, (data: string) => {
+            (<any>get("https://mooc1-2.chaoxing.com/ananas/status/" + this.task.taskinfo.property.objectid, (data: string) => {
                 let json = JSON.parse(data);
                 prompt("如果打开下载失败，请复制下面链接手动下载", json.download);
                 window.open(json.download);

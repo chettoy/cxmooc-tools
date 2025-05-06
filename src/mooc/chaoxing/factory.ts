@@ -1,5 +1,6 @@
 import { CxVideoControlBar, Video } from "@App/mooc/chaoxing/video";
 import {
+    CxCourseHomeworkQueryQuestion,
     CxCourseQueryQuestion,
     CxCourseTopic,
     CxTopicControlBar,
@@ -163,7 +164,7 @@ export class TaskFactory {
         TaskFactory.fix_cxsecret(document);
         let bank = new ToolsQuestionBankFacade("cx", taskinfo);
         let topic = new HomeworkTopic(context, bank);
-        topic.SetQueryQuestions(new CxCourseQueryQuestion(context, (context: any, el: HTMLElement): Question => {
+        topic.SetQueryQuestions(new CxCourseHomeworkQueryQuestion(context, (context: any, el: HTMLElement): Question => {
             return CxQuestionFactory.CreateHomeWorkQuestion(context, el);
         }));
         let task = new TopicAdapter(context, taskinfo, topic);

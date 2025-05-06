@@ -259,6 +259,8 @@ class cxSelectQuestion extends cxQuestion implements Question {
         console.log(el);
         if (el.querySelector("input")) {
             return el.querySelector("input").value;
+        } else if (el.querySelector(".num_option_dx")) {
+            return el.querySelector(".num_option_dx").getAttribute("data");
         } else if (el.querySelector(".num_option")) {
             return el.querySelector(".num_option").getAttribute("data");
         } else {

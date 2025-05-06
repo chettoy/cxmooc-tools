@@ -8,6 +8,7 @@ import { SystemConfig } from "./config";
 class background implements Launcher {
 
     public start() {
+        console.log("background start");
         let server = NewExtensionServerMessage("cxmooc-tools");
         server.Accept((client, data) => {
             switch (data.type) {
